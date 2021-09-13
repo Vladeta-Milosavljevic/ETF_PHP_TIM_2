@@ -1,0 +1,190 @@
+.my-form{
+    font-family: Times New Roman, Times, serif;
+}
+
+.my-form-gray{
+    font-family: Times New Roman, Times, serif;
+    color: gray;
+}
+
+.img{
+    float:right; 
+    vertical-align:middle;
+}
+
+.headline-university{
+    font-size: 12pt;
+}
+
+.adress-tel{
+    font-size: 11pt;
+}
+
+.bio{
+    font-family: Times New Roman, Times, serif; font-size: 14pt;
+}
+
+.textarea-bio{
+    border-color: white; width: 90%; text-indent:+35px; text-align:justify; font-size: 12pt;
+}
+
+.signature-space{
+    height: 20px;
+}
+
+.button-green{
+    background-color: white; 
+    color: black; 
+    border: 2px solid #4CAF50;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.button-red{
+    background-color: white; 
+    color: black; 
+    border: 2px solid red;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    float:right;
+}
+
+.underline{
+    text-decoration-line: underline; 
+    border-color: white; 
+    border-bottom-color:black;
+}
+
+.K2{
+    font-family: Times New Roman, Times, serif; 
+    font-size: 12pt;
+}
+
+.noborder{
+    border-color: white;
+}
+
+.solid{
+    border: 1px solid;
+}
+
+.solid-br{
+    border: 1px solid; 
+    border-right:white
+}
+
+.solid-bl{
+    border: 1px solid; 
+    border-left:white
+}
+
+.solid-bb{
+    border: 1px solid; 
+    border-bottom:white
+}
+
+.solid-bt{
+    border: 1px solid; 
+    border-top:white
+}
+
+.solid-bt-br{
+    border: 1px solid;
+    border-top:white; 
+    border-right:white
+}
+
+.solid-bt-bl{
+    border: 1px solid;
+    border-top:white; 
+    border-left:white
+}
+
+.solid-width{
+    border: 1px solid;
+    border-right:none; 
+    float: left; 
+    width: 10%;
+}
+
+.solid-width70{
+    border: 1px solid; 
+    border-right:none; 
+    border-left:none; 
+    width: 70%; 
+}
+
+.noborder-padding{
+    border-color: white;
+    padding: 20px
+}
+
+.noborder-text-center{
+    border-color: white; 
+    text-align:center
+}
+
+.indent{
+    margin-left:-20px;
+}
+
+.text-place{
+    border-color: white; 
+    width: 92%; 
+    text-indent:+35px; 
+    text-align:justify; 
+    font-size: 12pt
+}
+
+.margin-top{
+    margin-top:-10px;
+}
+
+.app-theme{
+    font-family: Times New Roman, Times, serif; font-size: 21px;
+}
+
+.check{
+    -webkit-appearance: initial;
+    appearance: initial;
+    background:white;
+    width: 30px;
+    height: 30px;
+    border: none;
+    width: 100%;
+}
+
+.check:checked:after{
+    content: "X";
+    color: black;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+
+#radio{
+        -webkit-appearance: initial;
+        appearance: initial;
+        background:white;
+        width: 30px;
+        height: 30px;
+        border: none;
+        width: 100%;
+}
+
+#radio:checked:after{
+    content: "X";
+    color: black;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+  }
+
+::-webkit-calendar-picker-indicator { display: none; }
+
