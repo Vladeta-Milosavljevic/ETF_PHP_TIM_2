@@ -19,6 +19,9 @@ class Filters extends BaseConfig
 		'csrf'     => CSRF::class,
 		'toolbar'  => DebugToolbar::class,
 		'honeypot' => Honeypot::class,
+		'login'    => \Myth\Auth\Filters\LoginFilter::class,
+		'role'     => \Myth\Auth\Filters\RoleFilter::class,
+		'permission' => \Myth\Auth\Filters\PermissionFilter::class,
 	];
 
 	/**
@@ -58,5 +61,8 @@ class Filters extends BaseConfig
 	 *
 	 * @var array
 	 */
-	public $filters = [];
+	public $filters = [
+		//'login' => ['before' => ['kontroler/metoda']],
+		//'login' => ['before' => ['kontroler/*']], ako je za sve metode kontrolera
+	];
 }
