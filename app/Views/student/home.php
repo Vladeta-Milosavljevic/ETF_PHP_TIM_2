@@ -1,14 +1,29 @@
 <?php
 $this->extend('layout');
 $this->section('sidebar');
+
+$link = [
+    'prijava' => 'student/prijava',
+    'obrazlozenje' => 'student/obrazlozenje',
+    'biografija' => 'student/biografija',
+];
 ?>
 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
     <div class="sb-sidenav-menu">
         <div class="nav">
             <div class="sb-sidenav-menu-heading">Корисник
             </div>
-            <a class="nav-link" href="index.html">
-            </a>
+            <div class="nav-link" href="index.html">
+                <?= user()->username; ?>
+            </div>
+            <?php foreach ($link as $text => $url) : ?>
+            <li class="nav-item mx-0 mx-lg-1">
+                <br>
+                <?= anchor($url, $text, ['class' => 'nav-link']) ?>
+                <br>
+            </li>
+            <?php endforeach; ?>
+
             <div class="sb-sidenav-menu-heading">Статус пријаве
             </div>
             <a class="nav-link" href="index.html">
@@ -84,6 +99,7 @@ $this->section('content');
         </div>
     </div>
 </div>
+<div>Student</div>
 
 
 <?php $this->endSection(); ?>

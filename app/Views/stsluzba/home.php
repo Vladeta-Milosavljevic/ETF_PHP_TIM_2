@@ -8,6 +8,7 @@ $this->section('sidebar');
             <div class="sb-sidenav-menu-heading">Корисник
             </div>
             <a class="nav-link" href="index.html">
+                <?= user()->username; ?>
             </a>
             <div class="sb-sidenav-menu-heading">Статус пријаве
             </div>
@@ -84,6 +85,7 @@ $this->section('content');
         </div>
     </div>
 </div>
+<div>Studentska sluzba</div>
 
 
 <?php $this->endSection(); ?>
