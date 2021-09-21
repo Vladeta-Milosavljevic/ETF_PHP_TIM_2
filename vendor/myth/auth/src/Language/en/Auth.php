@@ -77,7 +77,7 @@ return [
     'email'                     => 'Email',
     'emailAddress'              => 'Email Address',
     'sendInstructions'          => 'Send Instructions',
-    'loginTitle'                => 'Login',
+    'loginTitle'                => 'Пријава',
     'loginAction'               => 'Login',
     'rememberMe'                => 'Remember me',
     'needAnAccount'             => 'Need an account?',

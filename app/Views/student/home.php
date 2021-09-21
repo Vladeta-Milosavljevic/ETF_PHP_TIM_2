@@ -1,51 +1,9 @@
 <?php
 $this->extend('layout');
 $this->section('sidebar');
+echo view('student/menu');
+$this->endSection();
 
-$link = [
-    'prijava' => 'student/prijava',
-    'obrazlozenje' => 'student/obrazlozenje',
-    'biografija' => 'student/biografija',
-];
-?>
-<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-    <div class="sb-sidenav-menu">
-        <div class="nav">
-            <div class="sb-sidenav-menu-heading">Корисник
-            </div>
-            <div class="nav-link" href="index.html">
-                <?= user()->username; ?>
-            </div>
-            <?php foreach ($link as $text => $url) : ?>
-            <li class="nav-item mx-0 mx-lg-1">
-                <br>
-                <?= anchor($url, $text, ['class' => 'nav-link']) ?>
-                <br>
-            </li>
-            <?php endforeach; ?>
-
-            <div class="sb-sidenav-menu-heading">Статус пријаве
-            </div>
-            <a class="nav-link" href="index.html">
-                Негде тамо далеко
-            </a>
-            <div class="sb-sidenav-menu-heading">Операције
-            </div>
-            <a class="nav-link" href="index.html">
-                Пријава теме
-            </a>
-            <div class="sb-sidenav-menu-heading">Брисање теме
-            </div>
-            <a class="nav-link" href="index.html">
-                Размислите прво
-            </a>
-        </div>
-    </div>
-</nav>
-
-<?php $this->endSection(); ?>
-
-<?php
 $this->section('content');
 ?>
 
@@ -100,6 +58,7 @@ $this->section('content');
     </div>
 </div>
 <div>Student</div>
+<?= view('Myth\Auth\Views\_message_block') ?>
 
 
 <?php $this->endSection(); ?>

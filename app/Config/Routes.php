@@ -25,6 +25,7 @@ $routes->setAutoRoute(true);
 
 //$routes->add('kontroler/metoda', 'Kontroler::metoda', ['filter' => 'role:naziv_grupe']);
 //$routes->add('kontroler/metoda', 'Kontroler::metoda', ['filter' => 'perm:naziv_dozvole(permisije)']);
+$routes->post('student/biografija_posalji', 'Student::biografija_posalji');
 
 
 /*
