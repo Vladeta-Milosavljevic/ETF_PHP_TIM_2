@@ -13,6 +13,12 @@ class Student extends BaseController
 
     public function prijava()
     {
+
+        $query = $this->model->builder()
+            ->select('id, naslov, sadrzaj, concat(ime," ",prezime) as autor, datum')
+            ->join('autor', 'autor.korisnicko_ime=vest.autor')
+            ->orderBy('autor')
+            ->get();
         return view('student/prijava');
     }
     public function biografija()
