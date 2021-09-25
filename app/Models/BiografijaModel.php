@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Biografija extends Model
+class BiografijaModel extends Model
 {
     protected $table = 'biografija';
     protected $allowedFields = [

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Tema extends Model
+class TemaModel extends Model
 {
     protected $table         = 'tema';
     protected $allowedFields = [

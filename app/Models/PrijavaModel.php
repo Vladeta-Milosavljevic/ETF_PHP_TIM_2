@@ -4,11 +4,11 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Prijava extends Model
+class PrijavaModel extends Model
 {
     protected $table         = 'prijava';
     protected $allowedFields = [
-        'id_rad', 'autor', 'id_ruk', 'status', 'status', 'status', 'status', 'status',
+        'id_rad', 'ime_prezime', 'autor', 'id_ruk', 'status', 'status', 'status', 'status', 'status',
     ];
     protected $returnType    = 'object';
 }

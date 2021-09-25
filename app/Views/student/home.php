@@ -58,6 +58,7 @@ $this->section('content');
     </div>
 </div>
 <div>Student</div>
+
 <?= view('Myth\Auth\Views\_message_block') ?>
 
 

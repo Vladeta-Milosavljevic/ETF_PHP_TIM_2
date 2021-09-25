@@ -11,7 +11,7 @@ $this->section('content');
 <br>
 
 <div class="container">
-    <form action="<?= route_to('movies/create') ?>" method="post">
+    <form action="<?= route_to('student/prijava_sacuvaj') ?>" method="post">
         <div class="row">
             <div class="col-sm-6 col-xs-12">
                 <?= view('Myth\Auth\Views\_message_block') ?>
@@ -42,31 +42,34 @@ $this->section('content');
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="rukovodilac">Име и презиме руководиоца рада</label>
-                    <input type="text"
-                        class="form-control <?php if (session('errors.rukovodilac')) : ?>is-invalid<?php endif ?>"
-                        name="rukovodilac" aria-describedby="rukovodilac"
-                        placeholder="Име и презиме руководиоца рада"
-                        value="<?= old('rukovodilac') ?>">
+                    <label for="rukovodilac">Име и презиме руководиоца рада (ментора)</label>
+                    <select
+                        class="form-control <?php if (session('errors.rukRada')) : ?>is-invalid<?php endif ?>"
+                        id="rukRada" name="rukRada">
+                        <?php foreach ($mentor as $m) : ?>
+                        <option><?= $m->username ?></option>
+                        <?php endforeach; ?>
+                    </select>
+
                 </div>
 
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios"
-                        id="exampleRadios1" value="option1" checked>
-                    <label class="form-check-label" for="exampleRadios1">
+                    <input class="form-check-input" type="radio" name="izbor" onclick="rukPredmet()"
+                        id="izbor1" value="option1" checked>
+                    <label class="form-check-label" for="izbor1">
                         Руководилац рада је ангажован на изборном подручју мастер студија
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios"
-                        id="exampleRadios2" value="option2">
-                    <label class="form-check-label" for="exampleRadios2">
+                    <input class="form-check-input" type="radio" name="izbor" onclick="rukPredmet()"
+                        id="izbor2" value="option2">
+                    <label class="form-check-label" for="izbor2">
                         Руководилац рада није ангажован на изборном подручју мастер студија али је
                         кандидат код њега положио предмет
                     </label>
                 </div>
                 <div class="form-group">
-                    <input type="text"
+                    <input type="text" id='predmet' disabled
                         class="form-control <?php if (session('errors.predmet')) : ?>is-invalid<?php endif ?>"
                         name="predmet" aria-describedby="predmet"
                         placeholder="Kандидат је положио предмет" value="<?= old('predmet') ?>">
@@ -95,35 +98,63 @@ $this->section('content');
 
                 <div class="form-group">
                     <label for="komisija">Предлог Комисије за преглед и оцену </label>
+                    <br>
 
-                    <input type="text"
-                        class="form-control <?php if (session('errors.clan1')) : ?>is-invalid<?php endif ?>"
-                        name="clan1" aria-describedby="komisija" placeholder="Руководилац рада"
-                        value="<?= old('clan1') ?>">
+                    <label for="clan1" class="mt-3">Руководилац рада је први члан</label>
                     <br>
-                    <input type="text"
-                        class="form-control <?php if (session('errors.clan2')) : ?>is-invalid<?php endif ?>"
-                        name="clan2" aria-describedby="komisija" placeholder="Други члан комисије"
-                        value="<?= old('clan2') ?>">
+
+                    <label for="clan2" class="mt-3">Други члан комисије</label>
+                    <select
+                        class="form-control <?php if (session('errors.clan2')) : ?>is-invalid<?php endif ?> mt-3"
+                        id="clan1" name="clan2">
+                        <?php foreach ($mentor as $m) : ?>
+                        <option><?= $m->username ?></option>
+                        <?php endforeach; ?>
+                    </select>
                     <br>
-                    <input type="text"
+                    <label for="clan3">Трећи члан комисије</label>
+                    <select
                         class="form-control <?php if (session('errors.clan3')) : ?>is-invalid<?php endif ?>"
-                        name="clan3" aria-describedby="komisija" placeholder="Трећи члан комисије"
-                        value="<?= old('clan3') ?>">
+                        id="clan1" name="clan3">
+                        <?php foreach ($mentor as $m) : ?>
+                        <option><?= $m->username ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <br>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Датум</label>
+                    <input type="date"
+                        class="form-control <?php if (session('errors.date')) : ?>is-invalid<?php endif ?>"
+                        name="date" placeholder="Date" value="<?= old('date') ?>">
                 </div>
                 <br>
                 <h3 class="mt-6">Коментари</h3>
                 <div class="form-group">
                     <label for="komentari"></label>
                     <textarea type="text" rows="12"
-                        class="form-control <?php if (session('errors.komentari')) : ?>is-invalid<?php endif ?>"
+                        class="form-control <?php if (session('errors.komentari')) : ?>is-invalid<?php endif ?> mb-3"
                         name="komentari" aria-describedby="komentari" placeholder="Коментари"
                         value="<?= old('komentari') ?>"></textarea>
                 </div>
             </div>
+            <button type="submit" class="btn btn-primary btn-block">Пошаљите пријаву</button>
     </form>
 </div>
-<br>
-<button type="submit" class="btn btn-primary btn-block">Пошаљите пријаву</button>
 
+
+
+
+<script>
+function rukPredmet() {
+    var izbor2 = document.getElementById("izbor2");
+    var predmet = document.getElementById("predmet");
+    predmet.disabled = izbor2.checked ? false : true;
+    predmet.value = "";
+    if (!predmet.disabled) {
+        predmet.focus();
+    }
+}
+</script>
 <?php $this->endSection(); ?>
