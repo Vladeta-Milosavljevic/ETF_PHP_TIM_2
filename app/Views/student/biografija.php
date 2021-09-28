@@ -11,7 +11,7 @@ $this->section('content');
 <br>
 
 <div class="container">
-    <form action="<?= route_to('movies/create') ?>" method="post">
+    <form action="<?= route_to('student/biografija_sacuvaj') ?>" method="post">
         <div class="row">
             <?= view('Myth\Auth\Views\_message_block') ?>
             <?= csrf_field() ?>
@@ -20,8 +20,7 @@ $this->section('content');
                 <label for="biografija">Унесите вашу биографију</label>
                 <textarea type="text" rows="10"
                     class="form-control mb-3 <?php if (session('errors.biografija')) : ?>is-invalid<?php endif ?>"
-                    name="biografija" aria-describedby="biografija"
-                    placeholder="Унесите вашу биографију"
+                    name="tekst" aria-describedby="biografija" placeholder="Унесите вашу биографију"
                     value="<?= old('biografija') ?>"></textarea>
             </div>
 
@@ -34,10 +33,10 @@ $this->section('content');
                     value="<?= old('komentari') ?>"></textarea>
             </div>
         </div>
-
+        <button type="submit" class="btn btn-primary btn-block">Пошаљите биографију</button>
     </form>
 </div>
 <br>
-<button type="submit" class="btn btn-primary btn-block">Пошаљите биографију</button>
+
 
 <?php $this->endSection(); ?>

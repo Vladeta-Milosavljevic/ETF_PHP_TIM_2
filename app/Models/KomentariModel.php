@@ -10,5 +10,5 @@ class KomentariModel extends Model
     protected $allowedFields = [
         'id_rad', 'mentor_komentar', 'ruk_komentar', 'st_sluz_komentar',
     ];
-    protected $returnType = 'object';
+    protected $returnType = 'array';
 }

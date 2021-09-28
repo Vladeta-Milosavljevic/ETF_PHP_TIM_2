@@ -10,5 +10,5 @@ class BiografijaModel extends Model
     protected $allowedFields = [
         'id_rad', 'autor', 'tekst',
     ];
-    protected $returnType = 'object';
+    protected $returnType = 'array';
 }

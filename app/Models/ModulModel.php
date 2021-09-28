@@ -4,11 +4,11 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class TemaModel extends Model
+class ModulModel extends Model
 {
-    protected $table         = 'tema';
+    protected $table         = 'modul';
     protected $allowedFields = [
-        'id_student', 'id_mentor', 'status', 'deleted_at'
+        'naziv', 'ruk_modula', 'zam_ruk_modula',
     ];
     protected $returnType    = 'array';
 }

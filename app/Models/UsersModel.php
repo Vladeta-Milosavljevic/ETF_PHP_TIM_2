@@ -7,5 +7,5 @@ use CodeIgniter\Model;
 class UsersModel extends Model
 {
     protected $table         = 'users';
-    protected $returnType    = 'object';
+    protected $returnType    = 'array';
 }

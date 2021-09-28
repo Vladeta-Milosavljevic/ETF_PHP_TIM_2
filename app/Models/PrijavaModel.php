@@ -8,7 +8,7 @@ class PrijavaModel extends Model
 {
     protected $table         = 'prijava';
     protected $allowedFields = [
-        'id_rad', 'ime_prezime', 'autor', 'id_ruk', 'status', 'status', 'status', 'status', 'status',
+        'id_rad', 'ime_prezime', 'indeks', 'izborno_podrucje_MS', 'autor', 'ruk_predmet', 'naslov', 'naslov_eng', 'datum',
     ];
-    protected $returnType    = 'object';
+    protected $returnType    = 'array';
 }

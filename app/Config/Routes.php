@@ -25,8 +25,10 @@ $routes->setAutoRoute(true);
 
 //$routes->add('kontroler/metoda', 'Kontroler::metoda', ['filter' => 'role:naziv_grupe']);
 //$routes->add('kontroler/metoda', 'Kontroler::metoda', ['filter' => 'perm:naziv_dozvole(permisije)']);
-$routes->post('student/biografija_posalji', 'Student::biografija_posalji');
+
 $routes->post('student/prijava_sacuvaj', 'Student::prijava_sacuvaj');
+$routes->post('student/obrazlozenje_sacuvaj', 'Student::obrazlozenje_sacuvaj');
+$routes->post('student/biografija_posalji', 'Student::biografija_posalji');
 
 
 /*

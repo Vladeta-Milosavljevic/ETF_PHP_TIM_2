@@ -11,18 +11,18 @@ $this->section('content');
 <br>
 
 <div class="container">
-    <form action="<?= route_to('student/prijava_sacuvaj') ?>" method="post">
+    <form action="<?= route_to('student/prijava_azuriraj_sacuvaj') ?>" method="post">
         <div class="row">
             <div class="col-sm-6 col-xs-12">
                 <?= view('Myth\Auth\Views\_message_block') ?>
                 <?= csrf_field() ?>
-
+                <input name="tema_id" hidden value="<?= $tema['id'] ?>">
                 <div class="form-group">
                     <label for="ime">Име и презиме студента</label>
                     <input type="text"
                         class="form-control <?php if (session('errors.ime')) : ?>is-invalid<?php endif ?>"
                         name="ime" aria-describedby="ime" placeholder="Име и презиме студента"
-                        value="<?= old('ime') ?>">
+                        value="<?= $prijava['ime_prezime'] ?>">
                 </div>
                 <br>
                 <div class="form-group">
@@ -30,7 +30,7 @@ $this->section('content');
                     <input type="text"
                         class="form-control <?php if (session('errors.indeks')) : ?>is-invalid<?php endif ?>"
                         name="indeks" aria-describedby="indeks" placeholder="Број индекса"
-                        value="<?= old('indeks') ?>">
+                        value="<?= $prijava['indeks'] ?>">
                 </div>
                 <br>
                 <div class="form-group">
@@ -38,7 +38,8 @@ $this->section('content');
                     <input type="text"
                         class="form-control <?php if (session('errors.ipms')) : ?>is-invalid<?php endif ?>"
                         name="ipms" aria-describedby="ipms"
-                        placeholder="Изборно подручје мастер студија" value="<?= old('ipms') ?>">
+                        placeholder="Изборно подручје мастер студија"
+                        value="<?= $prijava['izborno_podrucje_MS'] ?>">
                 </div>
                 <br>
                 <div class="form-group">
@@ -47,8 +48,9 @@ $this->section('content');
                         class="form-control <?php if (session('errors.rukRada')) : ?>is-invalid<?php endif ?>"
                         id="rukRada" name="rukRada">
                         <?php foreach ($mentor as $m) : ?>
-                        <option value="<?= $m['id'] ?>" <?php if ($m['username'] == 'Mentor2') : ?>
-                            selected<?php endif; ?>><?= $m['username'] ?></option>
+                        <option value="<?= $m['id'] ?>"
+                            <?php if ($m['id'] == $tema['id_mentor']) : ?> selected<?php endif; ?>>
+                            <?= $m['username'] ?></option>
                         <?php endforeach; ?>
                     </select>
 
@@ -73,7 +75,8 @@ $this->section('content');
                     <input type="text" id='predmet' disabled
                         class="form-control <?php if (session('errors.predmet')) : ?>is-invalid<?php endif ?>"
                         name="predmet" aria-describedby="predmet"
-                        placeholder="Kандидат је положио предмет" value="<?= old('predmet') ?>">
+                        placeholder="Kандидат је положио предмет"
+                        value="<?= $prijava['ruk_predmet'] ?>">
                 </div>
                 <br>
                 <div class="form-group">
@@ -83,7 +86,7 @@ $this->section('content');
                         class="form-control <?php if (session('errors.naslov_sr')) : ?>is-invalid<?php endif ?>"
                         name="naslov_sr" aria-describedby="naslov_sr"
                         placeholder="Наслов мастер рада на српском језику (написан ћирилицом)"
-                        value="<?= old('naslov_sr') ?>">
+                        value="<?= $prijava['naslov'] ?>">
                 </div>
                 <br>
                 <div class="form-group">
@@ -92,7 +95,7 @@ $this->section('content');
                         class="form-control <?php if (session('errors.naslov_en')) : ?>is-invalid<?php endif ?>"
                         name="naslov_en" aria-describedby="naslov_en"
                         placeholder="Наслов мастер рада на енглеском језику"
-                        value="<?= old('naslov_en') ?>">
+                        value="<?= $prijava['naslov_eng'] ?>">
                 </div>
             </div>
             <div class="col-sm-6 col-xs-12">
@@ -109,7 +112,8 @@ $this->section('content');
                         class="form-control <?php if (session('errors.clan2')) : ?>is-invalid<?php endif ?> mt-3"
                         id="clan2" name="clan2">
                         <?php foreach ($mentor as $m) : ?>
-                        <option value="<?= $m['id'] ?>" <?php if ($m['username'] == 'Mentor3') : ?>
+                        <option value="<?= $m['id'] ?>"
+                            <?php if ($m['id'] == $komisija['id_clan_2']) : ?>
                             selected<?php endif; ?>><?= $m['username'] ?></option>
                         <?php endforeach; ?>
                     </select>
@@ -119,7 +123,8 @@ $this->section('content');
                         class="form-control <?php if (session('errors.clan3')) : ?>is-invalid<?php endif ?>"
                         id="clan3" name="clan3">
                         <?php foreach ($mentor as $m) : ?>
-                        <option value="<?= $m['id'] ?>" <?php if ($m['username'] == 'Mentor6') : ?>
+                        <option value="<?= $m['id'] ?>"
+                            <?php if ($m['id'] == $komisija['id_clan_3']) : ?>
                             selected<?php endif; ?>><?= $m['username'] ?></option>
                         <?php endforeach; ?>
                     </select>
@@ -130,7 +135,7 @@ $this->section('content');
                     <label for="date">Датум</label>
                     <input type="date"
                         class="form-control <?php if (session('errors.date')) : ?>is-invalid<?php endif ?>"
-                        name="date" placeholder="Date" value="<?= old('date') ?>">
+                        name="date" placeholder="Date" value="<?= $prijava['datum'] ?>">
                 </div>
                 <br>
                 <h3 class="mt-6">Коментари</h3>
@@ -142,7 +147,7 @@ $this->section('content');
                         value="<?= old('komentari') ?>"></textarea>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Пошаљите пријаву</button>
+            <button type="submit" class="btn btn-primary btn-block">Ажурирајте пријаву</button>
     </form>
 </div>
 

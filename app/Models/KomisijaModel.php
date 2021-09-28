@@ -11,5 +11,5 @@ class KomisijaModel extends Model
     protected $allowedFields = [
         'id_rad', 'id_pred_kom', 'id_clan_2', 'id_clan_3', 'id_odluke_kom', 'Obrazlozenje', 'datum',
     ];
-    protected $returnType = 'object';
+    protected $returnType = 'array';
 }
