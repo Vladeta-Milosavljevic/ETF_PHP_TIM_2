@@ -60,7 +60,7 @@ class Student extends BaseController
     {
         if ($this->validate([
             'ime' => 'required|min_length[5]',
-            'index' => 'required|min_length[5]',
+            'indeks' => 'required|min_length[5]',
             'ipms' => 'required|min_length[5]',
             'rukRada' => 'required',
             'izbor' => 'required|min_length[5]',
@@ -151,8 +151,72 @@ class Student extends BaseController
 
     public function prijava_azuriraj_sacuvaj()
     {
-        // $data='';
-        // return redirect()->back()->with('data', $data)->with('errors', $this->validator->getErrors());
+        if ($this->validate([
+            'ime' => 'required|min_length[5]',
+            'indeks' => 'required|min_length[5]',
+            'ipms' => 'required|min_length[5]',
+            'rukRada' => 'required',
+            'izbor' => 'required|min_length[5]',
+            'naslov_sr' => 'required|min_length[5]',
+            'naslov_en' => 'required|min_length[5]',
+            'clan2' => 'required',
+            'clan3' => 'required',
+            'date' => 'required',
+
+        ])) {
+
+            $rukRada = $this->request->getPost('rukRada');
+            $clan2 = $this->request->getPost('clan2');
+            $clan3 = $this->request->getPost('clan3');
+            if ($rukRada == $clan2 || $rukRada == $clan3 || $clan2 == $clan3) {
+                return redirect()->back()->withInput()->with('message', 'Не можете више пута одабрати истог професора');
+            }
+
+            $tema = [
+                'id_student' => user_id(),
+                'id_mentor' => $rukRada,
+                'id_modul' => '',
+                'status' => '',
+                'deleted_at' => '',
+            ];
+            $tema_id = $this->request->getPost('tema_id');
+            $this->temaModel->update($tema_id, $tema);
+            $id = $tema_id;
+            $predmet = $this->request->getPost('predmet') ?? '';
+            $prijava = [
+                'id_rad' => $id,
+                'ime_prezime' => $this->request->getPost('ime'),
+                'indeks' => $this->request->getPost('indeks'),
+                'izborno_podrucje_MS' => $this->request->getPost('ipms'),
+                'autor' => 'student',
+                'ruk_predmet' => $predmet,
+                'naslov' => $this->request->getPost('naslov_sr'),
+                'naslov_eng' => $this->request->getPost('naslov_en'),
+                'datum' => $this->request->getPost('date'),
+            ];
+
+            $prijava_id_upit = $this->prijavaModel->builder()->where('id_rad', $id)
+                ->get()->getResultArray()[0];
+            $prijava_id = $prijava_id_upit['id'];
+
+            $this->prijavaModel->update($prijava_id, $prijava);
+
+            $komisija = [
+                'id_rad' => $id,
+                'id_pred_kom' => $rukRada,
+                'id_clan_2' => $clan2,
+                'id_clan_3' => $clan3,
+            ];
+            $komisija_id_upit = $this->komisijaModel->builder()->where('id_rad', $id)
+                ->get()->getResultArray()[0];
+            $komisija_id = $komisija_id_upit['id'];
+
+            $this->komisijaModel->update($komisija_id, $komisija);
+
+            return redirect()->to('student/home')->with('message', 'Успешно ажурирана пријава');
+        } else {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
     }
 
     public function obrazlozenje()
@@ -175,7 +239,7 @@ class Student extends BaseController
     {
         if ($this->validate([
             'ime' => 'required|min_length[5]',
-            'indeks' => 'required',
+            'indeks' => 'required|min_length[5]',
             'modul' => 'required',
             'predmet' => 'required|min_length[5]',
             'oblast' => 'required|min_length[5]',

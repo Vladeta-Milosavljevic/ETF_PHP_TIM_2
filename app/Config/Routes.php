@@ -29,6 +29,7 @@ $routes->setAutoRoute(true);
 $routes->post('student/prijava_sacuvaj', 'Student::prijava_sacuvaj');
 $routes->post('student/obrazlozenje_sacuvaj', 'Student::obrazlozenje_sacuvaj');
 $routes->post('student/biografija_posalji', 'Student::biografija_posalji');
+$routes->post('student/prijava_azuriraj_sacuvaj', 'Student::prijava_azuriraj_sacuvaj');
 
 
 /*
