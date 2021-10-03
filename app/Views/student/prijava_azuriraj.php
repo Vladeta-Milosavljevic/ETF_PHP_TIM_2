@@ -61,21 +61,24 @@ $this->section('content');
 
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="izbor" onclick="rukPredmet()"
-                        id="izbor1" value="option1" checked>
+                        id="izbor1" value="option1" <?php if (!$prijava['ruk_predmet']) : ?> checked
+                        <?php endif ?>>
                     <label class="form-check-label" for="izbor1">
                         Руководилац рада је ангажован на изборном подручју мастер студија
                     </label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="izbor" onclick="rukPredmet()"
-                        id="izbor2" value="option2">
+                        id="izbor2" value="option2" <?php if ($prijava['ruk_predmet']) : ?> checked
+                        <?php endif ?>>
                     <label class="form-check-label" for="izbor2">
                         Руководилац рада није ангажован на изборном подручју мастер студија али је
                         кандидат код њега положио предмет
                     </label>
                 </div>
                 <div class="form-group">
-                    <input type="text" id='predmet' disabled
+                    <input type="text" id='predmet' <?php if (!$prijava['ruk_predmet']) : ?>
+                        disabled <?php endif ?>
                         class="form-control <?php if (session('errors.predmet')) : ?>is-invalid<?php endif ?>"
                         name="predmet" aria-describedby="predmet"
                         placeholder="Kандидат је положио предмет"

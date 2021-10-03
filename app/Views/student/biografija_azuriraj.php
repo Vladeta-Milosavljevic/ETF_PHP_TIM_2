@@ -11,7 +11,7 @@ $this->section('content');
 <br>
 
 <div class="container">
-    <form action="<?= route_to('student/biografija_sacuvaj') ?>" method="post">
+    <form action="<?= route_to('student/biografija_azuriraj_sacuvaj') ?>" method="post">
         <div class="row">
             <?= view('Myth\Auth\Views\_message_block') ?>
             <?= csrf_field() ?>
@@ -21,7 +21,7 @@ $this->section('content');
                 <textarea type="text" rows="10"
                     class="form-control mb-3 <?php if (session('errors.biografija')) : ?>is-invalid<?php endif ?>"
                     name="tekst" aria-describedby="biografija" placeholder="Унесите вашу биографију"
-                    value="<?= old('biografija') ?>"></textarea>
+                    <?php $biografija_tekst = old('tekst') ?? $biografija['tekst'] ?>><?= $biografija_tekst ?></textarea>
             </div>
 
             <h3 class="mt-6">Коментари</h3>
@@ -33,7 +33,7 @@ $this->section('content');
                     value="<?= old('komentari') ?>"></textarea>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-block">Пошаљите биографију</button>
+        <button type="submit" class="btn btn-primary btn-block">Ажурирајте биографију</button>
     </form>
 </div>
 <br>

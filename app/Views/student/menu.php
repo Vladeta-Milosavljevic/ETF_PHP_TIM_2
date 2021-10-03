@@ -27,16 +27,31 @@ $link = [
             <a class="nav-link" href="index.html">
                 Негде тамо далеко
             </a>
-            <div class="sb-sidenav-menu-heading">Операције
+            <div x-data="{ open: false }">
+                <a x-on:click="open = !open" class="nav-link">Проследите тему ментору</a>
+
+                <div x-show="open" class="nav-link">
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <?= anchor('student/prosledi_mentoru', 'Потврдите', ['class' => 'nav-link']) ?>
+                    </li>
+                </div>
             </div>
-            <a class="nav-link" href="index.html">
-                Пријава теме
-            </a>
+
             <div class="sb-sidenav-menu-heading">Брисање теме
             </div>
-            <a class="nav-link" href="index.html">
-                Размислите прво
-            </a>
+            <div class="sb-sidenav-menu-heading">Размислите прво
+            </div>
+
+
+            <div x-data="{ open: false }">
+                <a x-on:click="open = !open" class="nav-link">Обришите пријављену тему</a>
+
+                <div x-show="open" class="nav-link">
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <?= anchor('student/brisanje_teme', 'Јесте ли сигурни?', ['class' => 'nav-link']) ?>
+                    </li>
+                </div>
+            </div>
         </div>
     </div>
 </nav>

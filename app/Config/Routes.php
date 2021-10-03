@@ -27,9 +27,13 @@ $routes->setAutoRoute(true);
 //$routes->add('kontroler/metoda', 'Kontroler::metoda', ['filter' => 'perm:naziv_dozvole(permisije)']);
 
 $routes->post('student/prijava_sacuvaj', 'Student::prijava_sacuvaj');
-$routes->post('student/obrazlozenje_sacuvaj', 'Student::obrazlozenje_sacuvaj');
-$routes->post('student/biografija_posalji', 'Student::biografija_posalji');
 $routes->post('student/prijava_azuriraj_sacuvaj', 'Student::prijava_azuriraj_sacuvaj');
+$routes->post('student/obrazlozenje_sacuvaj', 'Student::obrazlozenje_sacuvaj');
+$routes->post('student/obrazlozenje_azuriraj_sacuvaj', 'Student::obrazlozenje_azuriraj_sacuvaj');
+$routes->post('student/biografija_sacuvaj', 'Student::biografija_sacuvaj');
+$routes->post('student/biografija_azuriraj_sacuvaj', 'Student::biografija_azuriraj_sacuvaj');
+
+
 
 
 /*
