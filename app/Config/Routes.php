@@ -32,6 +32,7 @@ $routes->post('student/obrazlozenje_sacuvaj', 'Student::obrazlozenje_sacuvaj');
 $routes->post('student/obrazlozenje_azuriraj_sacuvaj', 'Student::obrazlozenje_azuriraj_sacuvaj');
 $routes->post('student/biografija_sacuvaj', 'Student::biografija_sacuvaj');
 $routes->post('student/biografija_azuriraj_sacuvaj', 'Student::biografija_azuriraj_sacuvaj');
+$routes->post('mentor/prijava_azuriraj_sacuvaj', 'Mentor::prijava_azuriraj_sacuvaj');
 
 
 

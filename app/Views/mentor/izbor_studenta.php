@@ -31,8 +31,6 @@ $link = [
   
 
 
-
-
 <link rel="stylesheet" href="style.css">
 
 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -118,14 +116,11 @@ $this->section('content');
         echo "<td class='text-center'>" . $row['ime_prezime'] . "</td>";
         ?>
         <td class="text-center"> 
-        <?php 
-
-            echo anchor('mentor/prijava_azuriraj/', 'измени', ['class' => 'btn btn-outline-dark ml-2']);
-
+            <?php 
+            echo anchor('mentor/prijava_azuriraj/'.$row['id'], 'измени', ['class' => 'btn btn-outline-dark ml-2']); 
             ?>
         </td>
         <td class="text-center"> 
-     
             <?php
             echo anchor('mentor/obrazlozenje/', 'измени', ['class' => 'btn btn-outline-dark ml-2']);
             ?>
@@ -163,7 +158,76 @@ $this->section('content');
         crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
 
+    
+<!-- tabele iz bootstrapa 2 -->
 
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="style.css">
+<!------ Include the above in your HEAD tag ---------->
+        <main class="container pt-5">
+        <div class="card mb-5">
+            <div class="card-header">Fearures</div>
+            <div class="card-block p-0">
+                <table class="table table-bordered table-sm m-0">
+                    <thead class="">
+                    <tr>
+                <th>ID пријаве</th>
+                <th>Име и презиме</th>
+                <th class="text-center">Пријава</th>
+                <th class="text-center">Образложење теме</th>
+                <th class="text-center">Биографија</th>
+                <th class="text-center">Потврда теме</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+
+                            <td>September 14, 2013</td>
+                            <td>jhlilk22@yahoo.com</td>
+                            <td>jhlilk22@yahoo.com</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>John Lilki</td>
+                            <td>September 14, 2013</td>
+                            <td>jhlilk22@yahoo.com</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>John Lilki</td>
+                            <td>September 14, 2013</td>
+                            <td>jhlilk22@yahoo.com</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+<!-- tabele iz bootstrapa 2 do ovde -->
 
 
 <?php $this->endSection(); ?>

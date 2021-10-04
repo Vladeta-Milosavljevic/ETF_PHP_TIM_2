@@ -16,6 +16,7 @@ $this->section('content');
             <div class="col-sm-6 col-xs-12">
                 <?= view('Myth\Auth\Views\_message_block') ?>
                 <?= csrf_field() ?>
+                <input type="hidden" name="student_id" hidden value="<?= $id_student ?>">
                 <input name="tema_id" hidden value="<?= $tema['id'] ?>">
                 <div class="form-group">
                     <label for="ime">Име и презиме студента</label>
@@ -47,16 +48,11 @@ $this->section('content');
                 <br>
                 <div class="form-group">
                     <label for="rukovodilac">Име и презиме руководиоца рада (ментора)</label>
-                    <select
-                        class="form-control <?php if (session('errors.rukRada')) : ?>is-invalid<?php endif ?>"
-                        id="rukRada" name="rukRada">
-                        <?php foreach ($mentor as $m) : ?>
-                        <option value="<?= $m['id'] ?>"
-                            <?php if ($m['id'] == $tema['id_mentor']) : ?> selected<?php endif; ?>>
-                            <?= $m['username'] ?></option>
-                        <?php endforeach; ?>
-                    </select>
-
+                    <input type="text"
+                        class="form-control <?php if (session('errors.ime')) : ?>is-invalid<?php endif ?>"
+                        name="ime" aria-describedby="ime" placeholder="Име и презиме студента"
+                        <?php $mentor_ime = old('username') ?? $mentor['username'] ?>
+                        value="<?= $mentor_ime ?>">
                 </div>
 
                 <div class="form-check">
@@ -106,35 +102,35 @@ $this->section('content');
             </div>
             <div class="col-sm-6 col-xs-12">
 
-                <div class="form-group">
+            <div class="form-group">
                     <label for="komisija">Предлог Комисије за преглед и оцену </label>
                     <br>
-
+ 
                     <label for="clan1" class="mt-3">Руководилац рада је први члан</label>
                     <br>
-
+ 
                     <label for="clan2" class="mt-3">Други члан комисије</label>
                     <select
                         class="form-control <?php if (session('errors.clan2')) : ?>is-invalid<?php endif ?> mt-3"
                         id="clan2" name="clan2">
-                        <?php foreach ($mentor as $m) : ?>
-                        <option value="<?= $m['id'] ?>"
-                            <?php if ($m['id'] == $komisija['id_clan_2']) : ?>
-                            selected<?php endif; ?>><?= $m['username'] ?></option>
+                        <?php foreach ($mentori as $clan) : ?>
+                        <option value="<?= $clan['id'] ?>"
+                            <?php if ($clan['id'] == $clan2['id']) : ?>
+                            selected<?php endif; ?>><?= $clan['username'] ?></option>
                         <?php endforeach; ?>
                     </select>
+ 
                     <br>
                     <label for="clan3">Трећи члан комисије</label>
                     <select
-                        class="form-control <?php if (session('errors.clan3')) : ?>is-invalid<?php endif ?>"
+                        class="form-control <?php if (session('errors.clan3')) : ?>is-invalid<?php endif ?> mt-3"
                         id="clan3" name="clan3">
-                        <?php foreach ($mentor as $m) : ?>
-                        <option value="<?= $m['id'] ?>"
-                            <?php if ($m['id'] == $komisija['id_clan_3']) : ?>
-                            selected<?php endif; ?>><?= $m['username'] ?></option>
+                        <?php foreach ($mentori as $clan) : ?>
+                        <option value="<?= $clan['id'] ?>"
+                            <?php if ($clan['id'] == $clan3['id']) : ?>
+                            selected<?php endif; ?>><?= $clan['username'] ?></option>
                         <?php endforeach; ?>
                     </select>
-                    <br>
                 </div>
 
                 <div class="form-group">
