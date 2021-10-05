@@ -226,7 +226,7 @@ class Mentor extends BaseController
                 ->get()->getResultArray()[0];
             $prijava_id = $prijava_id_upit['id'];
  
-            $this->prijavaModel->update($prijava_id, $prijava);
+            $this->prijavaModel->insert($prijava, $prijava_id);
  
             $komisija = [
                 'id_rad' => $id,
@@ -248,7 +248,7 @@ class Mentor extends BaseController
                 'ruk_komentar' => '',
                 'st_sluz_komentar' => '',
             ];
-            $this->komentariModel->insert($komentar, true);
+            $this->komentariModel->insert($komentar);
  
             return redirect()->to('mentor/home')->with('message', 'Успешно ажурирана пријава');
         } else {
@@ -312,13 +312,17 @@ class Mentor extends BaseController
         }
     }
 
-    public function obrazlozenje_azuriraj()
+    public function obrazlozenje_azuriraj($id_student)
     {
+
+        $data['id_student'] = $id_student;
+
+
         $modul = $this->modulModel->findAll();
         $data['modul'] = $modul;
 
         // tema
-        $temaUpit = $this->temaModel->builder()->where('id_student', user_id())
+        $temaUpit = $this->temaModel->builder()->where('id_student', $id_student)
             ->get()->getResultArray()[0];
         $data['tema'] = $temaUpit;
 
@@ -332,7 +336,7 @@ class Mentor extends BaseController
         $obrazlozenjeUpit = $this->obrazlozenjeModel->builder()->where('id_rad', $id_teme)
             ->get()->getResultArray()[0];
         $data['obrazlozenje'] = $obrazlozenjeUpit;
-        return view('student/obrazlozenje_azuriraj', $data);
+        return view('mentor/obrazlozenje_azuriraj', $data);
     }
 
     public function obrazlozenje_azuriraj_sacuvaj()
@@ -346,11 +350,11 @@ class Mentor extends BaseController
             'pcmm' => 'required|min_length[15]',
             'sorm' => 'required|min_length[15]',
         ])) {
-
+            $id_student = $this->request->getPost('id_student');
 
             $query = $this->temaModel->builder()
                 ->select('id')
-                ->where('id_student', user_id())
+                ->where('id_student', $id_student)
                 ->get();
             $id_rad = $query->getResultArray()[0];
             $modul_id = (int)$this->request->getPost('modul');
@@ -368,8 +372,8 @@ class Mentor extends BaseController
             $tema_id = $this->request->getPost('tema_id');
 
             $tema_status = $this->temaModel->builder()->select('status')->where('id', $tema_id)->get()->getResultArray()[0];
-            if ($tema_status != 0) {
-                return redirect()->to('student/home')->with('message', 'Тема је прослеђена, не можете је ажурирати');
+            if ($tema_status['status'] != 0) {
+                return redirect()->to('mentor/home')->with('message', 'Тема је прослеђена, не можете је ажурирати');
             }
 
 
@@ -378,7 +382,17 @@ class Mentor extends BaseController
 
             $this->obrazlozenjeModel->update($obrazlozenje_id, $obrazlozenje);
 
-            return redirect()->to('student/home')->with('message', 'Успешно ажурирано образложење');
+            $komentari = $this->request->getPost('komentari');
+   
+            $komentar = [
+                'id_rad' => $id_rad['id'],
+                'mentor_komentar' => $komentari,
+                'ruk_komentar' => '',
+                'st_sluz_komentar' => '',
+            ];
+            $this->komentariModel->insert($komentar, true);
+
+            return redirect()->to('mentor/home')->with('message', 'Успешно ажурирано образложење');
         } else {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
@@ -421,50 +435,64 @@ class Mentor extends BaseController
         }
     }
 
-    public function biografija_azuriraj()
+    public function biografija_azuriraj($id_student)
     {
         // tema
-        $temaUpit = $this->temaModel->builder()->where('id_student', user_id())->get()->getResultArray()[0];
+        $temaUpit = $this->temaModel->builder()->where('id_student', $id_student)->get()->getResultArray()[0];
         $tema_id = $temaUpit['id'];
         $data['tema'] = $temaUpit;
-
-        //obrazlozenje
-        $obrazlozenjeUpit = $this->obrazlozenjeModel->builder()->where('id_rad', $tema_id)
-            ->get()->getResultArray()[0];
-        $data['obrazlozenje'] = $obrazlozenjeUpit;
-
+ 
         // biografija
         $biografijaUpit = $this->bioModel->builder()->where('id_rad', $tema_id)->get()->getResultArray()[0];
         $data['biografija'] = $biografijaUpit;
-        return view('student/biografija_azuriraj', $data);
+ 
+        $data['id_student'] = $id_student;
+ 
+        return view('mentor/biografija_azuriraj', $data);
     }
+
+    
     public function biografija_azuriraj_sacuvaj()
     {
         if ($this->validate([
             'tekst' => 'required|min_length[15]',
         ])) {
-
+ 
+            $id_student = $this->request->getPost('id_student');
+ 
             $query = $this->temaModel->builder()
                 ->select('id')
-                ->where('id_student', user_id())
+                ->where('id_student', $id_student)
                 ->get();
             $idr = $query->getResultArray()[0];
             $id_rad = $idr['id'];
-            $obrazlozenjeUpit = $this->bioModel->builder()->where('id_rad', $id_rad)->get()->getResultArray()[0];
-            $obrazlozenje_id = $obrazlozenjeUpit['id'];
-
+ 
             $tema_status = $this->temaModel->builder()->select('status')->where('id', $id_rad)->get()->getResultArray()[0];
-            if ($tema_status != 0) {
+            if ($tema_status['status'] != 0) {
                 return redirect()->to('student/home')->with('message', 'Тема је прослеђена, не можете је ажурирати');
             }
-
+ 
+            $biografijaUpit = $this->bioModel->builder()->where('id_rad', $id_rad)->get()->getResultArray()[0];
+ 
             $data = [
                 'id_rad' => $id_rad,
                 'autor' => 'student',
                 'tekst' => $this->request->getPost('tekst'),
             ];
-            $this->bioModel->update($obrazlozenje_id, $data);
-            return redirect()->to('student/home')->with('message', 'Успешно ажурирана биографија');
+ 
+            $this->bioModel->update($biografijaUpit['id'], $data);
+ 
+            $komentari = $this->request->getPost('komentari');
+   
+            $komentar = [
+                'id_rad' => $id_rad,
+                'mentor_komentar' => $komentari,
+                'ruk_komentar' => '',
+                'st_sluz_komentar' => '',
+            ];
+            $this->komentariModel->insert($komentar);
+ 
+            return redirect()->to('mentor/home')->with('message', 'Успешно ажурирана биографија');
         } else {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }

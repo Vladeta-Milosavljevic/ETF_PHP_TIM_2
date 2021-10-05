@@ -33,6 +33,8 @@ $routes->post('student/obrazlozenje_azuriraj_sacuvaj', 'Student::obrazlozenje_az
 $routes->post('student/biografija_sacuvaj', 'Student::biografija_sacuvaj');
 $routes->post('student/biografija_azuriraj_sacuvaj', 'Student::biografija_azuriraj_sacuvaj');
 $routes->post('mentor/prijava_azuriraj_sacuvaj', 'Mentor::prijava_azuriraj_sacuvaj');
+$routes->post('mentor/obrazlozenje_azuriraj_sacuvaj', 'Mentor::obrazlozenje_azuriraj_sacuvaj');
+$routes->post('mentor/biografija_azuriraj_sacuvaj', 'Mentor::biografija_azuriraj_sacuvaj');
 
 
 

@@ -15,7 +15,7 @@ $this->section('content');
         <div class="row">
             <?= view('Myth\Auth\Views\_message_block') ?>
             <?= csrf_field() ?>
-
+            <input type="hidden" name="id_student" hidden value="<?= $id_student ?>">
             <div class="form-group">
                 <label for="biografija">Унесите вашу биографију</label>
                 <textarea type="text" rows="10"
