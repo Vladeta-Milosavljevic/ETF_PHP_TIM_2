@@ -215,7 +215,7 @@ class Mentor extends BaseController
                 'ime_prezime' => $this->request->getPost('ime'),
                 'indeks' => $this->request->getPost('indeks'),
                 'izborno_podrucje_MS' => $this->request->getPost('ipms'),
-                'autor' => 'student',
+                'autor' => 'mentor',
                 'ruk_predmet' => $predmet,
                 'naslov' => $this->request->getPost('naslov_sr'),
                 'naslov_eng' => $this->request->getPost('naslov_en'),
@@ -226,7 +226,7 @@ class Mentor extends BaseController
                 ->get()->getResultArray()[0];
             $prijava_id = $prijava_id_upit['id'];
  
-            $this->prijavaModel->insert($prijava, $prijava_id);
+            $this->prijavaModel->update($prijava_id, $prijava);
  
             $komisija = [
                 'id_rad' => $id,
