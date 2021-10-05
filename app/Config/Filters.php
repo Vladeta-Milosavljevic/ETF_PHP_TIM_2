@@ -64,6 +64,6 @@ class Filters extends BaseConfig
 	public $filters = [
 		//'login' => ['before' => ['kontroler/metoda']],
 		//'login' => ['before' => ['kontroler/*']], ako je za sve metode kontrolera
-
+		'login' => ['before' => ['student/*', 'mentor/*', 'rukovodilac/*', 'stsluzba/*']],
 	];
 }
