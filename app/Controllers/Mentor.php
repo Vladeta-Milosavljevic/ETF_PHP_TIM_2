@@ -469,7 +469,7 @@ class Mentor extends BaseController
  
             $tema_status = $this->temaModel->builder()->select('status')->where('id', $id_rad)->get()->getResultArray()[0];
             if ($tema_status['status'] != 0) {
-                return redirect()->to('student/home')->with('message', 'Тема је прослеђена, не можете је ажурирати');
+                return redirect()->to('mentor/home')->with('message', 'Тема је прослеђена, не можете је ажурирати');
             }
  
             $biografijaUpit = $this->bioModel->builder()->where('id_rad', $id_rad)->get()->getResultArray()[0];
@@ -514,7 +514,7 @@ class Mentor extends BaseController
         }
     }
 
-    public function prosledi_mentoru()
+    public function prosledi_rukovodiocu()
     {
         // tema
         $temaUpit = $this->temaModel->builder()->where('id_student', user_id())
@@ -536,12 +536,12 @@ class Mentor extends BaseController
         $biografija_id = $idb ?? '';
 
 
-        $data['status'] = 200;
+        $data['status'] = 300;
         if ($tema_id && $prijava_id && $biografija_id) {
             $this->temaModel->update($id_teme, $data);
-            return redirect()->to('student/home')->with('message', 'Тема је прослеђена ментору');
+            return redirect()->to('mentor/home')->with('message', 'Тема је прослеђена руководиоцу');
         } else {
-            return redirect()->to('student/home')->with('message', 'Немате пријављену тему или нисте попунили сва документа');
+            return redirect()->to('mentor/home')->with('message', 'Немате пријављену тему или нисте попунили сва документа');
         }
     }
 }

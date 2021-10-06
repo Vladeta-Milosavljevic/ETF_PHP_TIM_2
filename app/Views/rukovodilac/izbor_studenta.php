@@ -2,8 +2,8 @@
 $this->extend('layout');
 $this->section('sidebar');
 $link = [
-    'Насловна' => 'mentor/home',
-    'Oдлука комисије' => 'mentor/odluka',
+    'Насловна' => 'rukovodilac/home',
+    'Oдлука комисије' => 'rukovodilac/odluka',
 
 ];
 ?>
@@ -91,10 +91,10 @@ $this->section('content');
     <table class="table table-striped custab">
         <?php
         $con=mysqli_connect("localhost","root","","etfphpprojekat");
-        $data = user_id();  
+        $data = user_id();       
         $query = "SELECT *
                   FROM users join tema on (users.id=tema.id_student) 
-                  join prijava on (tema.id = prijava.id_rad) WHERE tema.id_mentor = '$data'";
+                  join prijava on (tema.id = prijava.id_rad) WHERE prijava.ruk_predmet = '$data'";
         $result = mysqli_query($con, $query);
         echo "<table>"; 
         ?>
@@ -118,17 +118,17 @@ $this->section('content');
         ?>
         <td class="text-center"> 
             <?php 
-            echo anchor('mentor/prijava_azuriraj/'.$row['id'], 'измени', ['class' => 'btn btn-outline-dark ml-2']); 
+            echo anchor('rukovodilac/prijava_azuriraj/'.$row['id'], 'измени', ['class' => 'btn btn-outline-dark ml-2']); 
             ?>
         </td>
         <td class="text-center"> 
             <?php
-            echo anchor('mentor/obrazlozenje_azuriraj/'.$row['id_student'], 'измени', ['class' => 'btn btn-outline-dark ml-2']);
+            echo anchor('rukovodilac/obrazlozenje_azuriraj/'.$row['id_student'], 'измени', ['class' => 'btn btn-outline-dark ml-2']);
             ?>
         </td>
         <td class="text-center">       
             <?php
-            echo anchor('mentor/biografija_azuriraj/'.$row['id_student'], 'измени', ['class' => 'btn btn-outline-dark ml-2']);
+            echo anchor('rukovodilac/biografija_azuriraj/'.$row['id_student'], 'измени', ['class' => 'btn btn-outline-dark ml-2']);
             ?>
         </td>
                 <td class="text-center">        
