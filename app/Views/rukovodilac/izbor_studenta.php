@@ -91,10 +91,11 @@ $this->section('content');
     <table class="table table-striped custab">
         <?php
         $con=mysqli_connect("localhost","root","","etfphpprojekat");
-        $data = user_id();       
+        $data = user_id();
+ 
         $query = "SELECT *
                   FROM users join tema on (users.id=tema.id_student) 
-                  join prijava on (tema.id = prijava.id_rad) WHERE prijava.ruk_predmet = '$data'";
+                  join prijava on (tema.id = prijava.id_rad) WHERE prijava.izborno_podrucje_MS = (SELECT naziv from modul where ruk_modula = (select username from users where users.id = '$data'))";
         $result = mysqli_query($con, $query);
         echo "<table>"; 
         ?>
