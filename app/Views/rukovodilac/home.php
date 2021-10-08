@@ -57,7 +57,7 @@ $this->section('content');
         </div>
     </div>
 </div>
-<div>Mentor</div>
+<div>Руководилац</div>
 <?= view('Myth\Auth\Views\_message_block') ?>
 
 

@@ -17,7 +17,7 @@ class Home extends BaseController
 		}
 		if (in_groups('studentska_sluzba
 		')) {
-			return view('stsuzba/home');
+			return view('stsluzba/home');
 		}
 		if (in_groups('komisija')) {
 			return view('komisija/home');

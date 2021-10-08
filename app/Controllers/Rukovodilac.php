@@ -542,7 +542,7 @@ class Rukovodilac extends BaseController
         $biografija_id = $idb ?? '';
 
 
-        $data['status'] = 200;
+        $data['status'] = 500;
         if ($tema_id && $prijava_id && $biografija_id) {
             $this->temaModel->update($tema_id, $data);
             return redirect()->to('student/home')->with('message', 'Тема је прослеђена ментору');
