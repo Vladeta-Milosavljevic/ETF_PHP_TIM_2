@@ -151,6 +151,9 @@ $this->section('content');
                 </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Ажурирајте пријаву</button>
+            <br/>
+            <p></p>
+            <button type="submit" class="btn btn-primary btn-block" onclick="myFunction()">Вратите пријаву студенту</button>
     </form>
 </div>
 
