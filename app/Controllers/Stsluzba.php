@@ -553,7 +553,7 @@ class Stsluzba extends BaseController
         $prijavaUpit = $this->prijavaModel->builder()->where('id_rad', $tema_id)
             ->get()->getResultArray()[0];
         $idp = $prijavaUpit['id'];
-        $prijava_id = $idt ?? '';
+        $prijava_id = $idp ?? '';
 
 
         // biografija
