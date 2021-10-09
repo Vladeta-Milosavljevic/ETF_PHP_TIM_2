@@ -141,7 +141,7 @@ class Student extends BaseController
         // prijava
         $id_teme = $temaUpit['id'];
         $prijavaUpit = $this->prijavaModel->builder()->where('id_rad', $id_teme)
-            ->get()->getResultArray()[0];
+            ->where('autor', 'student')->get()->getResultArray()[0];
         $data['prijava'] = $prijavaUpit;
 
 
@@ -320,12 +320,12 @@ class Student extends BaseController
         //prijava
         $id_teme = $temaUpit['id'];
         $prijavaUpit = $this->prijavaModel->builder()->where('id_rad', $id_teme)
-            ->get()->getResultArray()[0];
+            ->where('autor', 'student')->get()->getResultArray()[0];
         $data['prijava'] = $prijavaUpit;
 
         //obrazlozenje
         $obrazlozenjeUpit = $this->obrazlozenjeModel->builder()->where('id_rad', $id_teme)
-            ->get()->getResultArray()[0];
+            ->where('autor', 'student')->get()->getResultArray()[0];
         $data['obrazlozenje'] = $obrazlozenjeUpit;
         return view('student/obrazlozenje_azuriraj', $data);
     }
@@ -423,13 +423,9 @@ class Student extends BaseController
         $tema_id = $temaUpit['id'];
         $data['tema'] = $temaUpit;
 
-        //obrazlozenje
-        $obrazlozenjeUpit = $this->obrazlozenjeModel->builder()->where('id_rad', $tema_id)
-            ->get()->getResultArray()[0];
-        $data['obrazlozenje'] = $obrazlozenjeUpit;
-
         // biografija
-        $biografijaUpit = $this->bioModel->builder()->where('id_rad', $tema_id)->get()->getResultArray()[0];
+        $biografijaUpit = $this->bioModel->builder()->where('id_rad', $tema_id)
+            ->where('autor', 'student')->get()->getResultArray()[0];
         $data['biografija'] = $biografijaUpit;
         return view('student/biografija_azuriraj', $data);
     }
@@ -492,9 +488,9 @@ class Student extends BaseController
         // prijava
         $id_teme = $temaUpit['id'];
         $prijavaUpit = $this->prijavaModel->builder()->where('id_rad', $id_teme)
-            ->get()->getResultArray()[0];
+            ->where('autor', 'student')->get()->getResultArray()[0];
         $idp = $prijavaUpit['id'];
-        $prijava_id = $idt ?? '';
+        $prijava_id = $idp ?? '';
 
 
         // biografija
@@ -510,5 +506,92 @@ class Student extends BaseController
         } else {
             return redirect()->to('student/home')->with('message', 'Немате пријављену тему или нисте попунили сва документа');
         }
+    }
+
+    public function prijava_verzije()
+    {
+        $query = $this->user->builder()
+            ->select('id, username')
+            ->join('auth_groups_users', 'auth_groups_users.user_id=users.id')
+            ->where('group_id', 200)
+            ->orderBy('username')
+            ->get();
+        $data['mentor_ime'] = $query->getResultArray();
+
+        // tema
+        $temaUpit = $this->temaModel->builder()->where('id_student', user_id())
+            ->get()->getResultArray()[0];
+        $data['tema'] = $temaUpit;
+
+        // prijava upit za sve verzije
+        $id_teme = $temaUpit['id'];
+        $prijavaUpit = $this->prijavaModel->builder()->where('id_rad', $id_teme)
+            ->get()->getResultArray();
+
+        // komisija
+        $komisijaUpit = $this->komisijaModel->builder()->where('id_rad', $id_teme)
+            ->get()->getResultArray()[0];
+        $data['komisija'] = $komisijaUpit;
+
+
+        // prosledjivanje podataka
+        foreach ($prijavaUpit as $priU) {
+            $data[$priU['autor']] = $priU;
+        }
+
+
+        return view('student/prijava_verzije', $data);
+    }
+
+    public function obrazlozenje_verzije()
+    {
+        $modul = $this->modulModel->findAll();
+        $data['modul'] = $modul;
+
+        // tema
+        $temaUpit = $this->temaModel->builder()->where('id_student', user_id())
+            ->get()->getResultArray()[0];
+        $data['tema'] = $temaUpit;
+
+        // prijava upit za sve verzije
+        $id_teme = $temaUpit['id'];
+        $prijavaUpit = $this->prijavaModel->builder()->where('id_rad', $id_teme)
+            ->get()->getResultArray();
+
+
+        // prosledjivanje podataka 
+        foreach ($prijavaUpit as $priU) {
+            $data[$priU['autor'] . '_prijava'] = $priU;
+        }
+
+        //obrazlozenje
+        $obrazlozenjeUpit = $this->obrazlozenjeModel->builder()->where('id_rad', $id_teme)
+            ->get()->getResultArray();
+
+        // prosledjivanje podataka
+        foreach ($obrazlozenjeUpit as $obrU) {
+            $data[$obrU['autor']] = $obrU;
+        }
+
+        return view('student/obrazlozenje_verzije', $data);
+    }
+
+    public function biografija_verzije()
+    {
+        // tema
+        $temaUpit = $this->temaModel->builder()->where('id_student', user_id())->get()->getResultArray()[0];
+        $tema_id = $temaUpit['id'];
+        $data['tema'] = $temaUpit;
+
+        // biografija
+        $biografijaUpit = $this->bioModel->builder()->where('id_rad', $tema_id)
+            ->get()->getResultArray();
+
+        // prosledjivanje podataka
+        foreach ($biografijaUpit as $bioU) {
+            $data[$bioU['autor']] = $bioU;
+        }
+
+        return view('student/biografija_verzije', $data);
     }
 }

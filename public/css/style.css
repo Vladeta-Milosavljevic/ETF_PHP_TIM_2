@@ -1,190 +1,201 @@
-.my-form{
-    font-family: Times New Roman, Times, serif;
+[x-cloak] {
+  display: none !important;
 }
 
-.my-form-gray{
-    font-family: Times New Roman, Times, serif;
-    color: gray;
+.my-form {
+  font-family: Times New Roman, Times, serif;
 }
 
-.img{
-    float:right; 
-    vertical-align:middle;
+.my-form-gray {
+  font-family: Times New Roman, Times, serif;
+  color: gray;
 }
 
-.headline-university{
-    font-size: 12pt;
+.img {
+  float: right;
+  vertical-align: middle;
 }
 
-.adress-tel{
-    font-size: 11pt;
+.headline-university {
+  font-size: 12pt;
 }
 
-.bio{
-    font-family: Times New Roman, Times, serif; font-size: 14pt;
+.adress-tel {
+  font-size: 11pt;
 }
 
-.textarea-bio{
-    border-color: white; width: 90%; text-indent:+35px; text-align:justify; font-size: 12pt;
+.bio {
+  font-family: Times New Roman, Times, serif;
+  font-size: 14pt;
 }
 
-.signature-space{
-    height: 20px;
+.textarea-bio {
+  border-color: white;
+  width: 90%;
+  text-indent: +35px;
+  text-align: justify;
+  font-size: 12pt;
 }
 
-.button-green{
-    background-color: white; 
-    color: black; 
-    border: 2px solid #4CAF50;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+.signature-space {
+  height: 20px;
 }
 
-.button-red{
-    background-color: white; 
-    color: black; 
-    border: 2px solid red;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    float:right;
+.button-green {
+  background-color: white;
+  color: black;
+  border: 2px solid #4caf50;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.underline{
-    text-decoration-line: underline; 
-    border-color: white; 
-    border-bottom-color:black;
+.button-red {
+  background-color: white;
+  color: black;
+  border: 2px solid red;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  float: right;
 }
 
-.K2{
-    font-family: Times New Roman, Times, serif; 
-    font-size: 12pt;
+.underline {
+  text-decoration-line: underline;
+  border-color: white;
+  border-bottom-color: black;
 }
 
-.noborder{
-    border-color: white;
+.K2 {
+  font-family: Times New Roman, Times, serif;
+  font-size: 12pt;
 }
 
-.solid{
-    border: 1px solid;
+.noborder {
+  border-color: white;
 }
 
-.solid-br{
-    border: 1px solid; 
-    border-right:white
+.solid {
+  border: 1px solid;
 }
 
-.solid-bl{
-    border: 1px solid; 
-    border-left:white
+.solid-br {
+  border: 1px solid;
+  border-right: white;
 }
 
-.solid-bb{
-    border: 1px solid; 
-    border-bottom:white
+.solid-bl {
+  border: 1px solid;
+  border-left: white;
 }
 
-.solid-bt{
-    border: 1px solid; 
-    border-top:white
+.solid-bb {
+  border: 1px solid;
+  border-bottom: white;
 }
 
-.solid-bt-br{
-    border: 1px solid;
-    border-top:white; 
-    border-right:white
+.solid-bt {
+  border: 1px solid;
+  border-top: white;
 }
 
-.solid-bt-bl{
-    border: 1px solid;
-    border-top:white; 
-    border-left:white
+.solid-bt-br {
+  border: 1px solid;
+  border-top: white;
+  border-right: white;
 }
 
-.solid-width{
-    border: 1px solid;
-    border-right:none; 
-    float: left; 
-    width: 10%;
+.solid-bt-bl {
+  border: 1px solid;
+  border-top: white;
+  border-left: white;
 }
 
-.solid-width70{
-    border: 1px solid; 
-    border-right:none; 
-    border-left:none; 
-    width: 70%; 
+.solid-width {
+  border: 1px solid;
+  border-right: none;
+  float: left;
+  width: 10%;
 }
 
-.noborder-padding{
-    border-color: white;
-    padding: 20px
+.solid-width70 {
+  border: 1px solid;
+  border-right: none;
+  border-left: none;
+  width: 70%;
 }
 
-.noborder-text-center{
-    border-color: white; 
-    text-align:center
+.noborder-padding {
+  border-color: white;
+  padding: 20px;
 }
 
-.indent{
-    margin-left:-20px;
+.noborder-text-center {
+  border-color: white;
+  text-align: center;
 }
 
-.text-place{
-    border-color: white; 
-    width: 92%; 
-    text-indent:+35px; 
-    text-align:justify; 
-    font-size: 12pt
+.indent {
+  margin-left: -20px;
 }
 
-.margin-top{
-    margin-top:-10px;
+.text-place {
+  border-color: white;
+  width: 92%;
+  text-indent: +35px;
+  text-align: justify;
+  font-size: 12pt;
 }
 
-.app-theme{
-    font-family: Times New Roman, Times, serif; font-size: 21px;
+.margin-top {
+  margin-top: -10px;
 }
 
-.check{
-    -webkit-appearance: initial;
-    appearance: initial;
-    background:white;
-    width: 30px;
-    height: 30px;
-    border: none;
-    width: 100%;
+.app-theme {
+  font-family: Times New Roman, Times, serif;
+  font-size: 21px;
 }
 
-.check:checked:after{
-    content: "X";
-    color: black;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    -webkit-transform: translate(-50%,-50%);
-    -moz-transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
+.check {
+  -webkit-appearance: initial;
+  appearance: initial;
+  background: white;
+  width: 30px;
+  height: 30px;
+  border: none;
+  width: 100%;
 }
 
-#radio{
-        -webkit-appearance: initial;
-        appearance: initial;
-        background:white;
-        width: 30px;
-        height: 30px;
-        border: none;
-        width: 100%;
+.check:checked:after {
+  content: "X";
+  color: black;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
-#radio:checked:after{
-    content: "X";
-    color: black;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    -webkit-transform: translate(-50%,-50%);
-    -moz-transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
-  }
+#radio {
+  -webkit-appearance: initial;
+  appearance: initial;
+  background: white;
+  width: 30px;
+  height: 30px;
+  border: none;
+  width: 100%;
+}
 
-::-webkit-calendar-picker-indicator { display: none; }
+#radio:checked:after {
+  content: "X";
+  color: black;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
 
+::-webkit-calendar-picker-indicator {
+  display: none;
+}
