@@ -141,6 +141,13 @@ $this->section('content');
                         placeholder="Date" value="<?= $prijava_date ?>">
                 </div>
                 <br>
+                <h3 class="mt-6">Претходни коментари</h3>
+                <div class="form-group">
+                <input type="text"
+                        class="form-control" style="height: 200px" readonly="readonly"
+                        name="prethodni_komentari" aria-describedby="prethodni_komentari"
+                        value="<?= $prethodni_komentari ?>">
+                </div>
                 <h3 class="mt-6">Коментари</h3>
                 <div class="form-group">
                     <label for="komentari"></label>
@@ -150,9 +157,25 @@ $this->section('content');
                         value="<?= old('komentari') ?>"></textarea>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Ажурирајте пријаву</button>
-            <br>
-            <button type="submit" class="btn btn-primary btn-block">Потврдите пријаву</button>
+            <button type="submit" class="btn btn-primary btn-block">Измени пријаву са одлуком К2 комисије</button>
+            <br/>
+            <p></p>
+            <?php
+            echo anchor('stsluzba/vrati_mentoru/'.$id_student, 'Врати пријаву ментору', ['class' => 'btn btn-primary btn-block']);            
+            ?>
+            <br/>
+            <p></p>
+            <?php
+            echo anchor('stsluzba/vrati_studentu/'.$id_student, 'Врати пријаву студенту', ['class' => 'btn btn-primary btn-block']);            
+            ?>     
+            <p></p>
+            <?php
+            echo anchor('stsluzba/prosledi_stsluzbi/'.$id_student, 'Измени већ прихваћену пријаву'.$id_student.' студентској служби', ['class' => 'btn btn-primary btn-block']);            
+            ?> 
+            <p></p>
+            <?php
+            echo anchor('stsluzba/pоtvrdi_prijavu/'.$id_student, 'Потврди пријаву студента '.$id_student, ['class' => 'btn btn-success btn-block']);            
+            ?> 
     </form>
 </div>
 

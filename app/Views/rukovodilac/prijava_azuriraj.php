@@ -141,6 +141,13 @@ $this->section('content');
                         placeholder="Date" value="<?= $prijava_date ?>">
                 </div>
                 <br>
+                <h3 class="mt-6">Претходни коментари</h3>
+                <div class="form-group">
+                <input type="text"
+                        class="form-control" style="height: 200px" readonly="readonly"
+                        name="prethodni_komentari" aria-describedby="prethodni_komentari"
+                        value="<?= $prethodni_komentari ?>">
+                </div>
                 <h3 class="mt-6">Коментари</h3>
                 <div class="form-group">
                     <label for="komentari"></label>
@@ -151,9 +158,16 @@ $this->section('content');
                 </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Ажурирајте пријаву</button>
-            <br>
-            <button type="submit" class="btn btn-primary btn-block" onclick="myFunction()">Вратите пријаву ментору</button>
-    </form>
+            <br/>
+            <p></p>
+            <?php
+            echo anchor('rukovodilac/vrati_mentoru/'.$id_student, 'Врати пријаву ментору', ['class' => 'btn btn-primary btn-block']);            
+            ?>   
+            <p></p>
+            <?php
+            echo anchor('rukovodilac/prosledi_stsluzbi/'.$id_student, 'Проследи пријаву студента '.$id_student.' студентској служби', ['class' => 'btn btn-primary btn-block']);            
+            ?> 
+            </form>
 </div>
 
 

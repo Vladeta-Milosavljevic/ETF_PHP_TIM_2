@@ -141,19 +141,33 @@ $this->section('content');
                         placeholder="Date" value="<?= $prijava_date ?>">
                 </div>
                 <br>
+                <h3 class="mt-6">Претходни коментари</h3>
+                <div class="form-group">
+                <input type="text"
+                        class="form-control" style="height: 200px" readonly="readonly"
+                        name="prethodni_komentari" aria-describedby="prethodni_komentari"
+                        value="<?= $prethodni_komentari ?>">
+                </div>
                 <h3 class="mt-6">Коментари</h3>
                 <div class="form-group">
                     <label for="komentari"></label>
-                    <textarea type="text" rows="12"
+                    <textarea type="text" rows="4"
                         class="form-control <?php if (session('errors.komentari')) : ?>is-invalid<?php endif ?> mb-3"
                         name="komentari" aria-describedby="komentari" placeholder="Коментари"
                         value="<?= old('komentari') ?>"></textarea>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Ажурирајте пријаву</button>
-            <br/>
+            <br/> 
             <p></p>
-            <button type="submit" class="btn btn-primary btn-block" onclick="myFunction()">Вратите пријаву студенту</button>
+            <?php
+            echo anchor('mentor/vrati_studentu/'.$id_student, 'Врати пријаву студенту', ['class' => 'btn btn-primary btn-block']);            
+            ?>
+            <br/> 
+            <p></p>
+            <?php
+            echo anchor('mentor/prosledi_rukovodiocu/'.$id_student, 'Проследи пријаву студента '.$id_student.' руководиоцу', ['class' => 'btn btn-primary btn-block']);            
+            ?>
     </form>
 </div>
 

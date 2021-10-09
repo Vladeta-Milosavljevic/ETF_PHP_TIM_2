@@ -94,7 +94,7 @@ $this->section('content');
         $data = user_id();  
         $query = "SELECT *
                   FROM users join tema on (users.id=tema.id_student) 
-                  join prijava on (tema.id = prijava.id_rad) WHERE tema.id_mentor = '$data'";
+                  join prijava on (tema.id = prijava.id_rad) WHERE tema.id_mentor = '$data' AND tema.status IN (1,2,6)";
         $result = mysqli_query($con, $query);
         echo "<table>"; 
         ?>

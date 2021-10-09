@@ -170,7 +170,27 @@ class Rukovodilac extends BaseController
         ->orderBy('username')
         ->get();
         $data['mentori'] = $query->getResultArray();
- 
+        $komentariUpit = $this->komentariModel->builder()->where('id_rad', $tema_id)->get()->getResultArray();
+        $komentari = '';
+
+        foreach( $komentariUpit as $komentar){
+            if($komentar['mentor_komentar'] != ''){
+             $komentari .= 'Komentar mentora: ';
+             $komentari .= $komentar['mentor_komentar'];
+             $komentari .= ' ' ."echo </br>";
+            }
+            if($komentar['ruk_komentar'] != ''){
+             $komentari .= 'Komentar rukovodioca: ';
+             $komentari .= $komentar['ruk_komentar'];
+             $komentari .= ' ';
+            }
+            if($komentar['st_sluz_komentar'] != ''){
+             $komentari .= 'Komentar sluzbe: ';
+             $komentari .= $komentar['st_sluz_komentar'];
+             $komentari .= ' ';
+            }
+        }
+        $data['prethodni_komentari'] = $komentari;
         return view('rukovodilac/prijava_azuriraj', $data);
     }
     // Mentor - azuriraj prijavu
@@ -244,8 +264,8 @@ class Rukovodilac extends BaseController
    
             $komentar = [
                 'id_rad' => $id,
-                'mentor_komentar' => $komentari,
-                'ruk_komentar' => '',
+                'mentor_komentar' => '',
+                'ruk_komentar' => $komentari,
                 'st_sluz_komentar' => '',
             ];
             $this->komentariModel->insert($komentar);
@@ -514,40 +534,55 @@ class Rukovodilac extends BaseController
         }
     }
 
-    public function prosledi_stsluzbi()
+    public function prosledi_stsluzbi($id_student)
     {
-        $rukRada = user_id();
-        $id_student = $this->request->getPost('student_id');
+        $temaUpit = $this->temaModel->builder()->where('id_student', $id_student)->get()->getResultArray()[0];
+        $mentorUpit = $this->user->builder()->where('id', $temaUpit['id_mentor'])->get()->getResultArray()[0];
+
         // tema
         $tema = [
             'id_student' => $id_student,
-            'id_mentor' => $rukRada,
-            'id_modul' => '',
+            'id_mentor' => $mentorUpit['id'],
             'status' => '5',
             'deleted_at' => '',
         ];
-        $tema_id = $this->request->getPost('tema_id');
+        $tema_id = $temaUpit['id'];
         $this->temaModel->update($tema_id, $tema);
-
+        
         // prijava
         $prijavaUpit = $this->prijavaModel->builder()->where('id_rad', $tema_id)
             ->get()->getResultArray()[0];
         $idp = $prijavaUpit['id'];
-        $prijava_id = $idt ?? '';
-
+        $prijava_id = $idp ?? '';
 
         // biografija
         $biografijaUpit = $this->bioModel->builder()->where('id_rad', $tema_id)->get()->getResultArray()[0];
         $idb = $biografijaUpit['id'];
         $biografija_id = $idb ?? '';
 
-
-        $data['status'] = 500;
         if ($tema_id && $prijava_id && $biografija_id) {
-            $this->temaModel->update($tema_id, $data);
-            return redirect()->to('student/home')->with('message', 'Тема је прослеђена ментору');
+            return redirect()->to('rukovodilac/home')->with('message', 'Тема је прослеђена студентској служби');
         } else {
-            return redirect()->to('student/home')->with('message', 'Немате пријављену тему или нисте попунили сва документа');
+            return redirect()->to('rukovodilac/home')->with('message', 'Немате пријављену тему или нисте попунили сва документа');
+        }
+    }
+
+    public function vrati_mentoru($id_student)
+    {
+        $rukRada = user_id();
+        // tema
+        $tema = [
+            'id_student' => $id_student,
+            'id_mentor' => $rukRada,
+            'status' => '2',
+            'deleted_at' => '',
+        ];
+        $temaUpit = $this->temaModel->builder()->where('id_student', $id_student)->get()->getResultArray()[0];
+        if($temaUpit['status'] == 2){
+          return redirect()->to('rukovodilac/home')->with('message', 'Пријава је већ враћена ментору!');
+        }else{
+           $this->temaModel->update($temaUpit['id'], $tema);
+           return redirect()->to('rukovodilac/home')->with('message', 'Успешно враћена пријава ментору!');
         }
     }
 }

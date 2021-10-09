@@ -9,6 +9,7 @@ use App\Models\ObrazlozenjeTemeModel;
 use App\Models\PrijavaModel;
 use App\Models\TemaModel;
 use App\Models\UsersModel;
+use App\Models\KomentariModel;
 
 
 class Student extends BaseController
@@ -20,6 +21,7 @@ class Student extends BaseController
     protected $komisijaModel;
     protected $modulModel;
     protected $bioModel;
+    protected $komentariModel;
 
     public function __construct()
     {
@@ -30,6 +32,7 @@ class Student extends BaseController
         $this->bioModel = new BiografijaModel();
         $this->komisijaModel = new KomisijaModel();
         $this->modulModel = new ModulModel();
+        $this->komentariModel = new KomentariModel();
     }
 
     public function home()
@@ -146,6 +149,28 @@ class Student extends BaseController
         $komisijaUpit = $this->komisijaModel->builder()->where('id_rad', $id_teme)
             ->get()->getResultArray()[0];
         $data['komisija'] = $komisijaUpit;
+
+        $komentariUpit = $this->komentariModel->builder()->where('id_rad', $id_teme)->get()->getResultArray();
+        $komentari = '';
+
+        foreach( $komentariUpit as $komentar){
+            if($komentar['mentor_komentar'] != ''){
+             $komentari .= 'Komentar mentora: ';
+             $komentari .= $komentar['mentor_komentar'];
+             $komentari .= ' ' ."echo </br>";
+            }
+            if($komentar['ruk_komentar'] != ''){
+             $komentari .= 'Komentar rukovodioca: ';
+             $komentari .= $komentar['ruk_komentar'];
+             $komentari .= ' ';
+            }
+            if($komentar['st_sluz_komentar'] != ''){
+             $komentari .= 'Komentar sluzbe: ';
+             $komentari .= $komentar['st_sluz_komentar'];
+             $komentari .= ' ';
+            }
+        }
+        $data['prethodni_komentari'] = $komentari;
         return view('student/prijava_azuriraj', $data);
     }
 
@@ -478,7 +503,7 @@ class Student extends BaseController
         $biografija_id = $idb ?? '';
 
 
-        $data['status'] = 200;
+        $data['status'] = 1;
         if ($tema_id && $prijava_id && $biografija_id) {
             $this->temaModel->update($id_teme, $data);
             return redirect()->to('student/home')->with('message', 'Тема је прослеђена ментору');

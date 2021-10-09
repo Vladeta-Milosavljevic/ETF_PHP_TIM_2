@@ -170,7 +170,27 @@ class Stsluzba extends BaseController
         ->orderBy('username')
         ->get();
         $data['mentori'] = $query->getResultArray();
- 
+        $komentariUpit = $this->komentariModel->builder()->where('id_rad', $tema_id)->get()->getResultArray();
+        $komentari = '';
+
+        foreach( $komentariUpit as $komentar){
+            if($komentar['mentor_komentar'] != ''){
+             $komentari .= 'Komentar mentora: ';
+             $komentari .= $komentar['mentor_komentar'];
+             $komentari .= ' ' ."echo </br>";
+            }
+            if($komentar['ruk_komentar'] != ''){
+             $komentari .= 'Komentar rukovodioca: ';
+             $komentari .= $komentar['ruk_komentar'];
+             $komentari .= ' ';
+            }
+            if($komentar['st_sluz_komentar'] != ''){
+             $komentari .= 'Komentar sluzbe: ';
+             $komentari .= $komentar['st_sluz_komentar'];
+             $komentari .= ' ';
+            }
+        }
+        $data['prethodni_komentari'] = $komentari;
         return view('stsluzba/prijava_azuriraj', $data);
     }
     // Mentor - azuriraj prijavu
