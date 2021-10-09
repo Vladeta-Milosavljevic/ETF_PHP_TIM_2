@@ -165,7 +165,7 @@ $this->section('content');
             ?>   
             <p></p>
             <?php
-            echo anchor('rukovodilac/prosledi_stsluzbi/'.$id_student, 'Проследи пријаву студента '.$id_student.' студентској служби', ['class' => 'btn btn-primary btn-block']);            
+            echo anchor('rukovodilac/prosledi_stsluzbi/'.$id_student, 'Проследи пријаву студента  '.$id_student.' студентској служби', ['class' => 'btn btn-primary btn-block']);            
             ?> 
             </form>
 </div>
