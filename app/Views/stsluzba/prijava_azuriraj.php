@@ -144,38 +144,56 @@ $this->section('content');
                 <h3 class="mt-6">Претходни коментари</h3>
                 <div class="form-group">
                 <input type="text"
-                        class="form-control" style="height: 200px" readonly="readonly"
+                        class="form-control" style="height: 100px" readonly="readonly"
                         name="prethodni_komentari" aria-describedby="prethodni_komentari"
                         value="<?= $prethodni_komentari ?>">
                 </div>
                 <h3 class="mt-6">Коментари</h3>
                 <div class="form-group">
                     <label for="komentari"></label>
-                    <textarea type="text" rows="12"
+                    <textarea type="text" rows="3"
                         class="form-control <?php if (session('errors.komentari')) : ?>is-invalid<?php endif ?> mb-3"
                         name="komentari" aria-describedby="komentari" placeholder="Коментари"
                         value="<?= old('komentari') ?>"></textarea>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Измени пријаву са одлуком К2 комисије</button>
+            <div class='row'>
+            <div class='col-2'>
+            <p></p>
+            <button type="submit" class="btn btn-primary btn-block">Измени пријаву студента након одлуке К2 комисије</button>
             <br/>
+            </div>
+            <div class='col-2'>
             <p></p>
             <?php
-            echo anchor('stsluzba/vrati_mentoru/'.$id_student, 'Врати пријаву ментору', ['class' => 'btn btn-primary btn-block']);            
+            echo anchor('stsluzba/izmeni_postojecu_prijavu/'.$id_student, 'Измени већ прихваћену пријаву за студента '.$id_student, ['class' => 'btn btn-primary btn-block']);            
+            ?> 
+            </div> 
+            <div class='col-1'>  
+            <p></p>
+            </div>           
+            <div class='col-2'>  
+            <p></p>
+            <?php
+            echo anchor('stsluzba/potvrdi_prijavu/'.$id_student, 'Потврди пријаву студента '.$id_student, ['class' => 'btn btn-success btn-block']);            
+            ?> 
+            </div>
+            <div class='col-1'>  
+            <p></p>
+            </div>      
+            <div class='col-2'>
+            <p></p>
+            <?php
+            echo anchor('stsluzba/vrati_mentoru/'.$id_student, 'Врати пријаву ментору', ['class' => 'btn btn-danger btn-block']);            
             ?>
-            <br/>
+            </div>
+            <div class='col-2'>
             <p></p>
             <?php
-            echo anchor('stsluzba/vrati_studentu/'.$id_student, 'Врати пријаву студенту', ['class' => 'btn btn-primary btn-block']);            
-            ?>     
-            <p></p>
-            <?php
-            echo anchor('stsluzba/prosledi_stsluzbi/'.$id_student, 'Измени већ прихваћену пријаву'.$id_student.' студентској служби', ['class' => 'btn btn-primary btn-block']);            
+            echo anchor('stsluzba/vrati_studentu/'.$id_student, 'Врати пријаву студенту', ['class' => 'btn btn-danger btn-block']);            
             ?> 
-            <p></p>
-            <?php
-            echo anchor('stsluzba/pоtvrdi_prijavu/'.$id_student, 'Потврди пријаву студента '.$id_student, ['class' => 'btn btn-success btn-block']);            
-            ?> 
+            </div>  
+
     </form>
 </div>
 

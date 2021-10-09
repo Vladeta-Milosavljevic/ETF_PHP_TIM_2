@@ -177,17 +177,17 @@ class Stsluzba extends BaseController
             if($komentar['mentor_komentar'] != ''){
              $komentari .= 'Komentar mentora: ';
              $komentari .= $komentar['mentor_komentar'];
-             $komentari .= ' ' ."echo </br>";
+             $komentari .= ''."\n";
             }
             if($komentar['ruk_komentar'] != ''){
              $komentari .= 'Komentar rukovodioca: ';
              $komentari .= $komentar['ruk_komentar'];
-             $komentari .= ' ';
+             $komentari .= ''."\n";
             }
             if($komentar['st_sluz_komentar'] != ''){
              $komentari .= 'Komentar sluzbe: ';
              $komentari .= $komentar['st_sluz_komentar'];
-             $komentari .= ' ';
+             $komentari .= ''."\n";
             }
         }
         $data['prethodni_komentari'] = $komentari;
@@ -222,7 +222,7 @@ class Stsluzba extends BaseController
                 'id_student' => $id_student,
                 'id_mentor' => $rukRada,
                 'id_modul' => '',
-                'status' => '4',  //koja sad fora sa 6,7,8 prijava vracena mentoru, rukovodiocu, prihvacena
+                'status' => '6',  
                 'deleted_at' => '',
             ];
             $tema_id = $this->request->getPost('tema_id');
@@ -270,7 +270,7 @@ class Stsluzba extends BaseController
             ];
             $this->komentariModel->insert($komentar);
  
-            return redirect()->to('stsluzba/home')->with('message', 'Успешно ажурирана пријава oд стране студентске службе');
+            return redirect()->to('stsluzba/home')->with('message', 'Успешно промењена пријава након одлуке К2 комисије');
         } else {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
@@ -534,40 +534,93 @@ class Stsluzba extends BaseController
         }
     }
 
-    public function prosledi_komisiji()
+    public function prosledi_komisiji($id_student)
     {
-        $rukRada = user_id();
-        $id_student = $this->request->getPost('student_id');
+        $temaUpit = $this->temaModel->builder()->where('id_student', $id_student)->get()->getResultArray()[0];
+        $mentorUpit = $this->user->builder()->where('id', $temaUpit['id_mentor'])->get()->getResultArray()[0];
+
         // tema
         $tema = [
             'id_student' => $id_student,
-            'id_mentor' => $rukRada,
-            'id_modul' => '',
-            'status' => '8',
+            'id_mentor' => $mentorUpit['id'],
+            'status' => '5',
             'deleted_at' => '',
         ];
-        $tema_id = $this->request->getPost('tema_id');
+        $tema_id = $temaUpit['id'];
         $this->temaModel->update($tema_id, $tema);
-
+        
         // prijava
         $prijavaUpit = $this->prijavaModel->builder()->where('id_rad', $tema_id)
             ->get()->getResultArray()[0];
         $idp = $prijavaUpit['id'];
         $prijava_id = $idp ?? '';
 
-
         // biografija
         $biografijaUpit = $this->bioModel->builder()->where('id_rad', $tema_id)->get()->getResultArray()[0];
         $idb = $biografijaUpit['id'];
         $biografija_id = $idb ?? '';
 
-
-        $data['status'] = 600;
         if ($tema_id && $prijava_id && $biografija_id) {
-            $this->temaModel->update($tema_id, $data);
-            return redirect()->to('stsluzba/home')->with('message', 'Тема је прихваћена');
+            return redirect()->to('stsluzba/home')->with('message', 'Тема је прослеђена студентској служби');
         } else {
             return redirect()->to('stsluzba/home')->with('message', 'Немате пријављену тему или нисте попунили сва документа');
+        }
+    }
+
+    public function vrati_mentoru($id_student)
+    {
+        $temaUpit = $this->temaModel->builder()->where('id_student', $id_student)->get()->getResultArray()[0];
+        $mentorUpit = $this->user->builder()->where('id', $temaUpit['id_mentor'])->get()->getResultArray()[0];
+        // tema
+        $tema = [
+            'id_student' => $id_student,
+            'id_mentor' => $mentorUpit['id'],
+            'status' => '2',
+            'deleted_at' => '',
+        ];
+        if($temaUpit['status'] == 2){
+          return redirect()->to('rukovodilac/home')->with('message', 'Пријава је већ враћена ментору!');
+        }else{
+           $this->temaModel->update($temaUpit['id'], $tema);
+           return redirect()->to('rukovodilac/home')->with('message', 'Успешно враћена пријава ментору!');
+        }
+    }
+
+    public function vrati_studentu($id_student)
+    { 
+        $temaUpit = $this->temaModel->builder()->where('id_student', $id_student)->get()->getResultArray()[0];
+        $mentorUpit = $this->user->builder()->where('id', $temaUpit['id_mentor'])->get()->getResultArray()[0];
+        // tema
+        $tema = [
+            'id_student' => $id_student,
+            'id_mentor' => $mentorUpit['id'],
+            'status' => '0',
+            'deleted_at' => '',
+        ];
+        if($temaUpit['status'] == 0){
+          return redirect()->to('mentor/home')->with('message', 'Пријава је већ враћена студенту!');
+        }else{
+           $this->temaModel->update($temaUpit['id'], $tema);
+           return redirect()->to('mentor/home')->with('message', 'Успешно враћена пријава студенту!');
+        }
+    } 
+
+    public function potvrdi_prijavu($id_student)
+    {
+        $temaUpit = $this->temaModel->builder()->where('id_student', $id_student)->get()->getResultArray()[0];
+        $mentorUpit = $this->user->builder()->where('id', $temaUpit['id_mentor'])->get()->getResultArray()[0];
+        // tema
+        $tema = [
+            'id_student' => $id_student,
+            'id_mentor' => $mentorUpit['id'],
+            'status' => '8',
+            'deleted_at' => '',
+        ];
+        if($temaUpit['status'] == 8){
+          return redirect()->to('mentor/home')->with('message', 'Пријава је већ прихваћена!');
+        }else{
+           $this->temaModel->update($temaUpit['id'], $tema);
+           return redirect()->to('mentor/home')->with('message', 'Успешно прихваћена пријава за студента '.$id_student);
         }
     }
 }
