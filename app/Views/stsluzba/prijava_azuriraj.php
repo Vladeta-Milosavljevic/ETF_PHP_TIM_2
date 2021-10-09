@@ -1,7 +1,7 @@
 <?php
 $this->extend('layout');
 $this->section('sidebar');
-echo view('mentor/menu');
+echo view('stsluzba/menu');
 $this->endSection();
 
 $this->section('content');
@@ -11,7 +11,7 @@ $this->section('content');
 <br>
 
 <div class="container">
-    <form action="<?= route_to('mentor/prijava_azuriraj_sacuvaj') ?>" method="post">
+    <form action="<?= route_to('stsluzba/prijava_azuriraj_sacuvaj') ?>" method="post">
         <div class="row">
             <div class="col-sm-6 col-xs-12">
                 <?= view('Myth\Auth\Views\_message_block') ?>
@@ -151,9 +151,8 @@ $this->section('content');
                 </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Ажурирајте пријаву</button>
-            <br/>
-            <p></p>
-            <button type="submit" class="btn btn-primary btn-block" onclick="myFunction()">Вратите пријаву студенту</button>
+            <br>
+            <button type="submit" class="btn btn-primary btn-block">Потврдите пријаву</button>
     </form>
 </div>
 

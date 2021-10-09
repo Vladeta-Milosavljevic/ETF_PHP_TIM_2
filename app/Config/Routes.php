@@ -38,6 +38,9 @@ $routes->post('mentor/biografija_azuriraj_sacuvaj', 'Mentor::biografija_azuriraj
 $routes->post('rukovodilac/prijava_azuriraj_sacuvaj', 'Rukovodilac::prijava_azuriraj_sacuvaj');
 $routes->post('rukovodilac/obrazlozenje_azuriraj_sacuvaj', 'Rukovodilac::obrazlozenje_azuriraj_sacuvaj');
 $routes->post('rukovodilac/biografija_azuriraj_sacuvaj', 'Rukovodilac::biografija_azuriraj_sacuvaj');
+$routes->post('stsluzba/prijava_azuriraj_sacuvaj', 'Stsluzba::prijava_azuriraj_sacuvaj');
+$routes->post('stsluzba/obrazlozenje_azuriraj_sacuvaj', 'Stsluzba::obrazlozenje_azuriraj_sacuvaj');
+$routes->post('stsluzba/biografija_azuriraj_sacuvaj', 'Stsluzba::biografija_azuriraj_sacuvaj');
 
 
 

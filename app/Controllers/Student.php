@@ -182,7 +182,7 @@ class Student extends BaseController
             $tema_id = $this->request->getPost('tema_id');
 
             $tema_status = $this->temaModel->builder()->select('status')->where('id', $tema_id)->get()->getResultArray()[0];
-            if ($tema_status != 0) {
+            if ($tema_status['status'] != 0) {
                 return redirect()->to('student/home')->with('message', 'Тема је прослеђена, не можете је ажурирати');
             }
 

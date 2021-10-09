@@ -202,7 +202,7 @@ class Mentor extends BaseController
                 'id_student' => $id_student,
                 'id_mentor' => $rukRada,
                 'id_modul' => '',
-                'status' => '',
+                'status' => '2',
                 'deleted_at' => '',
             ];
             $tema_id = $this->request->getPost('tema_id');
@@ -516,15 +516,22 @@ class Mentor extends BaseController
 
     public function prosledi_rukovodiocu()
     {
+        
+        $rukRada = user_id();
+        $id_student = $this->request->getPost('student_id');
         // tema
-        $temaUpit = $this->temaModel->builder()->where('id_student', user_id())
-            ->get()->getResultArray()[0];
-        $idt = $temaUpit['id'];
-        $tema_id = $idt ?? '';
+        $tema = [
+            'id_student' => $id_student,
+            'id_mentor' => $rukRada,
+            'id_modul' => '',
+            'status' => '3',
+            'deleted_at' => '',
+        ];
+        $tema_id = $this->request->getPost('tema_id');
+        $this->temaModel->update($tema_id, $tema);
 
         // prijava
-        $id_teme = $temaUpit['id'];
-        $prijavaUpit = $this->prijavaModel->builder()->where('id_rad', $id_teme)
+        $prijavaUpit = $this->prijavaModel->builder()->where('id_rad', $tema_id)
             ->get()->getResultArray()[0];
         $idp = $prijavaUpit['id'];
         $prijava_id = $idt ?? '';
@@ -538,7 +545,7 @@ class Mentor extends BaseController
 
         $data['status'] = 300;
         if ($tema_id && $prijava_id && $biografija_id) {
-            $this->temaModel->update($id_teme, $data);
+            $this->temaModel->update($tema_id, $data);
             return redirect()->to('mentor/home')->with('message', 'Тема је прослеђена руководиоцу');
         } else {
             return redirect()->to('mentor/home')->with('message', 'Немате пријављену тему или нисте попунили сва документа');

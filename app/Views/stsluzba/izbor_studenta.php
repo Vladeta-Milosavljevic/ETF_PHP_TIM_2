@@ -2,8 +2,8 @@
 $this->extend('layout');
 $this->section('sidebar');
 $link = [
-    'Насловна' => 'rukovodilac/home',
-    'Oдлука комисије' => 'rukovodilac/odluka',
+    'Насловна' => 'stsluzba/home',
+    'Oдлука комисије' => 'stsluzba/odluka',
 
 ];
 ?>
@@ -95,7 +95,7 @@ $this->section('content');
  
         $query = "SELECT *
                   FROM users join tema on (users.id=tema.id_student) 
-                  join prijava on (tema.id = prijava.id_rad) WHERE prijava.izborno_podrucje_MS = (SELECT naziv from modul where ruk_modula = (select username from users where users.id = '$data'))";
+                  join prijava on (tema.id = prijava.id_rad)";
         $result = mysqli_query($con, $query);
         echo "<table>"; 
         ?>
@@ -119,17 +119,17 @@ $this->section('content');
         ?>
         <td class="text-center"> 
             <?php 
-            echo anchor('rukovodilac/prijava_azuriraj/'.$row['id'], 'измени', ['class' => 'btn btn-outline-dark ml-2']); 
+            echo anchor('stsluzba/prijava_azuriraj/'.$row['id'], 'измени', ['class' => 'btn btn-outline-dark ml-2']); 
             ?>
         </td>
         <td class="text-center"> 
             <?php
-            echo anchor('rukovodilac/obrazlozenje_azuriraj/'.$row['id_student'], 'измени', ['class' => 'btn btn-outline-dark ml-2']);
+            echo anchor('stsluzba/obrazlozenje_azuriraj/'.$row['id_student'], 'измени', ['class' => 'btn btn-outline-dark ml-2']);
             ?>
         </td>
         <td class="text-center">       
             <?php
-            echo anchor('rukovodilac/biografija_azuriraj/'.$row['id_student'], 'измени', ['class' => 'btn btn-outline-dark ml-2']);
+            echo anchor('stsluzba/biografija_azuriraj/'.$row['id_student'], 'измени', ['class' => 'btn btn-outline-dark ml-2']);
             ?>
         </td>
                 <td class="text-center">        
