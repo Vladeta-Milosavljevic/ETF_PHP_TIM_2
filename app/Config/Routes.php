@@ -41,6 +41,9 @@ $routes->post('rukovodilac/biografija_azuriraj_sacuvaj', 'Rukovodilac::biografij
 $routes->post('stsluzba/prijava_azuriraj_sacuvaj', 'Stsluzba::prijava_azuriraj_sacuvaj');
 $routes->post('stsluzba/obrazlozenje_azuriraj_sacuvaj', 'Stsluzba::obrazlozenje_azuriraj_sacuvaj');
 $routes->post('stsluzba/biografija_azuriraj_sacuvaj', 'Stsluzba::biografija_azuriraj_sacuvaj');
+$routes->post('komisija/prijava_azuriraj_sacuvaj', 'Komisija::prijava_azuriraj_sacuvaj');
+$routes->post('komisija/obrazlozenje_azuriraj_sacuvaj', 'Komisija::obrazlozenje_azuriraj_sacuvaj');
+$routes->post('komisija/biografija_azuriraj_sacuvaj', 'Komisija::biografija_azuriraj_sacuvaj');
 
 
 

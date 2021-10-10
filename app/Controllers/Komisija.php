@@ -107,7 +107,7 @@ class Komisija extends BaseController
             }
         }
         $data['prethodni_komentari'] = $komentari;
-        return view('stsluzba/prijava_azuriraj', $data);
+        return view('komisija/prijava_azuriraj', $data);
     }
 
     public function prijava_azuriraj_sacuvaj()
@@ -185,10 +185,23 @@ class Komisija extends BaseController
             ];
             $this->komentariModel->insert($komentar);
  
-            return redirect()->to('stsluzba/home')->with('message', 'Успешно промењена пријава након одлуке К2 комисије');
+            return redirect()->to('komisija/home')->with('message', 'Успешно промењена пријава након одлуке К2 комисије');
         } else {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
+    }
+
+    public function odluka_komisije_potrebne_izmene($id_student)
+    {
+        $temaUpit = $this->temaModel->builder()->where('id_student', $id_student)->get()->getResultArray()[0];
+        $komisijaUpit = $this->komisijaModel->builder()->where('id', user_id())->get()->getResultArray()[0];
+        // tema
+        $odluka = [
+            'id_odluke_kom' => '3',
+            'obrazlozenje' => $this->request->getPost('obrazlozenje')
+        ];
+           $this->komisijaModel->update($komisijaUpit['id'], $odluka);
+           return redirect()->to('komisija/home')->with('message', 'Успешно донета одлука');
     }
 }
 
