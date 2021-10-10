@@ -617,10 +617,31 @@ class Stsluzba extends BaseController
             'deleted_at' => '',
         ];
         if($temaUpit['status'] == 8){
-          return redirect()->to('mentor/home')->with('message', 'Пријава је већ прихваћена!');
+          return redirect()->to('stsluzba/home')->with('message', 'Пријава је већ прихваћена!');
         }else{
            $this->temaModel->update($temaUpit['id'], $tema);
-           return redirect()->to('mentor/home')->with('message', 'Успешно прихваћена пријава за студента '.$id_student);
+           return redirect()->to('stsluzba/home')->with('message', 'Успешно прихваћена пријава за студента '.$id_student);
+        }
+    }
+
+        public function vec_prihvacena($id_student)
+    { 
+        $temaUpit = $this->temaModel->builder()->where('id_student', $id_student)->get()->getResultArray()[0];
+        $mentorUpit = $this->user->builder()->where('id', $temaUpit['id_mentor'])->get()->getResultArray()[0];
+        // tema
+        if($temaUpit['status'] == 8){
+        $tema = [
+            'id_student' => $id_student,
+            'id_mentor' => $mentorUpit['id'],
+            'status' => '7',
+            'deleted_at' => '',
+        ];
+        }
+        if($temaUpit['status'] == 7){
+          return redirect()->to('stsluzba/home')->with('message', 'Прихваћена пријава је већ измењена!');
+        }else{
+           $this->temaModel->update($temaUpit['id'], $tema);
+           return redirect()->to('stsluzba/home')->with('message', 'Успешно измењена већ прихваћена пријава!');
         }
     }
 }
