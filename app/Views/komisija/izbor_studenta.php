@@ -111,6 +111,10 @@ $this->section('content');
                 <th class="text-center">Тема се одбија</th>
                 <th class="text-center">Oбразложење</th>
                 <th class="text-center"></th>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
             </tr>
         </thead>
         <?php
@@ -122,17 +126,17 @@ $this->section('content');
         ?>
         <td class="text-center"> 
             <?php 
-            echo anchor('komisija/prijava_azuriraj/'.$row['id'], 'погледај', ['class' => 'btn btn-outline-dark ml-2']); 
+            echo anchor('komisija/prijava_azuriraj/'.$row['id'], 'Погледај', ['class' => 'btn btn-outline-dark ml-2']); 
             ?>
         </td>
         <td class="text-center"> 
             <?php
-            echo anchor('komisija/obrazlozenje_azuriraj/'.$row['id_student'], 'погледај', ['class' => 'btn btn-outline-dark ml-2']);
+            echo anchor('komisija/obrazlozenje_azuriraj/'.$row['id_student'], 'Погледај', ['class' => 'btn btn-outline-dark ml-2']);
             ?>
         </td>
         <td class="text-center">       
             <?php
-            echo anchor('komisija/biografija_azuriraj/'.$row['id_student'], 'погледај', ['class' => 'btn btn-outline-dark ml-2']);
+            echo anchor('komisija/biografija_azuriraj/'.$row['id_student'], 'Погледај', ['class' => 'btn btn-outline-dark ml-2']);
             ?>
         </td>
                 <td class="text-center">        
@@ -146,17 +150,20 @@ $this->section('content');
                 </div>
                 </td>
                 <td>
-                <div class="form-group">
-                    <label for="obrazlozenje"></label>
-                    <textarea type="text" rows="3"
+                <div class="form-group" style="width:160%" >
+                    <textarea type="text" rows="2"
                         class="form-control <?php if (session('errors.obrazlozenje')) : ?>is-invalid<?php endif ?> mb-3"
-                        name="obrazlozenje" aria-describedby="obrazlozenje" placeholder=""
+                        name="obrazlozenje" aria-describedby="obrazlozenje" placeholder="" 
                         value="<?= old('obrazlozenje') ?>"></textarea>
                 </div>
                 </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td class="text-center">       
             <?php
-            echo anchor('komisija/odluka_komisije_potrebne_izmene/'.$row['id_student'], 'Промени измене', ['class' => 'btn btn-outline-dark ml-2']);
+            echo anchor('komisija/odluka_komisije_potrebne_izmene/'.$row['id_student'], 'Убаци измене', ['class' => 'btn btn-outline-dark ml-2']);
             ?>
         </td>
         <?php 

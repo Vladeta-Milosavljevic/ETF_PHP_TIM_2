@@ -195,11 +195,16 @@ class Komisija extends BaseController
     {
         $temaUpit = $this->temaModel->builder()->where('id_student', $id_student)->get()->getResultArray()[0];
         $komisijaUpit = $this->komisijaModel->builder()->where('id', user_id())->get()->getResultArray()[0];
+        date_default_timezone_set('Europe/Belgrade');
+        $date = date('Y-m-d H:i:s');
+
         // tema
         $odluka = [
             'id_odluke_kom' => '3',
-            'obrazlozenje' => $this->request->getPost('obrazlozenje')
+            'obrazlozenje' => $this->request->getVar('obrazlozenje'),
+            'datum' => $date,
         ];
+
            $this->komisijaModel->update($komisijaUpit['id'], $odluka);
            return redirect()->to('komisija/home')->with('message', 'Успешно донета одлука');
     }
