@@ -92,7 +92,8 @@ $this->section('content');
         $data = user_id();
          $query = "SELECT *
                   FROM users join tema on (users.id=tema.id_student)
-                  join prijava on (tema.id = prijava.id_rad)";
+                  join prijava on (tema.id = prijava.id_rad) join komisija on (prijava.id_rad = komisija.id_rad)
+                  where komisija.id_odluke_kom = 0";
         $result = mysqli_query($con, $query);
         echo "<table>";
         ?>
@@ -139,12 +140,12 @@ $this->section('content');
         </td>
                 <td class="text-center">        
                 <div>
-                    <button class="btn btn-outline-dark  pull-left" type="submit">></button>
+                <button onclick="myFunction_prihvata_se(<?php echo($row['id_student'])?>)" class="btn btn-outline-dark">></button>
                 </div>
                 </td>
                 <td class="text-center">        
                 <div>
-                    <button class="btn btn-outline-dark  pull-left" type="submit">x</button>
+                <button onclick="myFunction_odbija_se(<?php echo($row['id_student'])?>)" class="btn btn-outline-dark">x</button>
                 </div>
                 </td>
                 <td>
@@ -191,6 +192,39 @@ function myFunction(id_student) {
             data : {id_student:id_student, obrazlozenje:obrazlozenje},
             success: function(){
                 alert("Успешно сачуване измене!");
+                window.location='izbor_studenta';
+            },
+            error: function(){
+                alert("Дошло је до грешке!");
+            }
+        });
+}
+
+function myFunction_prihvata_se(id_student) { 
+  var obrazlozenje = document.getElementById("obrazlozenje").value;
+  $.ajax({
+            type : "POST",
+            url  : "odluka_komisije_prihvata_se",
+            data : {id_student:id_student, obrazlozenje:obrazlozenje},
+            success: function(){
+                alert("Успешно сачуване измене - пријава се прихвата!");
+                window.location='izbor_studenta';
+            },
+            error: function(){
+                alert("Дошло је до грешке!");
+            }
+        });
+}
+
+function myFunction_odbija_se(id_student) { 
+  var obrazlozenje = document.getElementById("obrazlozenje").value;
+  $.ajax({
+            type : "POST",
+            url  : "odluka_komisije_odbija_se",
+            data : {id_student:id_student, obrazlozenje:obrazlozenje},
+            success: function(){
+                alert("Успешно сачуване измене - пријава се одбија!");
+                window.location='izbor_studenta';
             },
             error: function(){
                 alert("Дошло је до грешке!");

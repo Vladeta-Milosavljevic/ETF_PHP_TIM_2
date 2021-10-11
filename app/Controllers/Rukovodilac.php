@@ -48,90 +48,6 @@ class Rukovodilac extends BaseController
         return view('rukovodilac/izbor_studenta');
     }
 
-    public function prijava()
-    {
-        $query = $this->user->builder()
-            ->select('id, username')
-            ->join('auth_groups_users', 'auth_groups_users.user_id=users.id')
-            ->where('group_id', 200)
-            ->orderBy('username')
-            ->get();
-        $data['mentor'] = $query->getResultArray();
-        $testProvera = $this->temaModel->builder()->where('id_student', user_id())
-            ->get()->getResultArray();
-        $test = $testProvera ?? '';
-        if ($test) {
-            return redirect()->to('student/prijava_azuriraj');
-        } else {
-            return view('student/prijava', $data);
-        }
-    }
-
-    public function prijava_sacuvaj()
-    {
-        if ($this->validate([
-            'ime' => 'required|min_length[5]',
-            'indeks' => 'required|min_length[5]',
-            'ipms' => 'required|min_length[5]',
-            'rukRada' => 'required',
-            'izbor' => 'required|min_length[5]',
-            'naslov_sr' => 'required|min_length[5]',
-            'naslov_en' => 'required|min_length[5]',
-            'clan2' => 'required',
-            'clan3' => 'required',
-            'date' => 'required',
-
-        ])) {
-            $rukRada = $this->request->getPost('rukRada');
-            $clan2 = $this->request->getPost('clan2');
-            $clan3 = $this->request->getPost('clan3');
-            if ($rukRada == $clan2 || $rukRada == $clan3 || $clan2 == $clan3) {
-                return redirect()->back()->withInput()->with('message_danger', 'Не можете више пута одабрати истог професора');
-            }
-
-            $tema = [
-                'id_student' => user_id(),
-                'id_mentor' => $rukRada,
-                'id_modul' => '',
-                'status' => '',
-                'deleted_at' => '',
-            ];
-
-
-            $id = $this->temaModel->insert($tema, true);
-            $predmet = $this->request->getPost('predmet') ?? '';
-            $prijava = [
-                'id_rad' => $id,
-                'ime_prezime' => $this->request->getPost('ime'),
-                'indeks' => $this->request->getPost('indeks'),
-                'izborno_podrucje_MS' => $this->request->getPost('ipms'),
-                'autor' => 'student',
-                'ruk_predmet' => $predmet,
-                'naslov' => $this->request->getPost('naslov_sr'),
-                'naslov_eng' => $this->request->getPost('naslov_en'),
-                'datum' => $this->request->getPost('date'),
-            ];
-
-
-            $this->prijavaModel->insert($prijava);
-
-            $komisija = [
-                'id_rad' => $id,
-                'id_pred_kom' => $rukRada,
-                'id_clan_2' => $clan2,
-                'id_clan_3' => $clan3,
-            ];
-
-            $this->komisijaModel->insert($komisija);
-
-            return redirect()->to('student/home')->with('message', 'Успешно сачувана пријава');
-        } else {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-        }
-    }
-
-    // Mentor azurira vec postojecu prijavu odredjenog studenta
-
     public function prijava_azuriraj($id)
     {
        $mentorUpit = $this->user->builder()->where('id', user_id())->get()->getResultArray()[0];
@@ -193,7 +109,6 @@ class Rukovodilac extends BaseController
         $data['prethodni_komentari'] = $komentari;
         return view('rukovodilac/prijava_azuriraj', $data);
     }
-    // Mentor - azuriraj prijavu
 
     public function prijava_azuriraj_sacuvaj()
     {
@@ -271,62 +186,6 @@ class Rukovodilac extends BaseController
             $this->komentariModel->insert($komentar);
  
             return redirect()->to('rukovodilac/home')->with('message', 'Успешно ажурирана пријава oд стране руководиоца');
-        } else {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-        }
-    }
-
-    public function obrazlozenje()
-    {
-        $modul = $this->modulModel->findAll();
-        $data['modul'] = $modul;
-        $id_rad = $this->temaModel->builder()->select('id')->where('id_student', user_id())
-            ->get()->getResultArray()[0];
-
-        $testProvera = $this->obrazlozenjeModel->builder()->where('id_rad', $id_rad['id'])
-            ->get()->getResultArray();
-        $test = $testProvera ?? '';
-        if ($test) {
-            return redirect()->to('student/obrazlozenje_azuriraj');
-        } else {
-            return view('student/obrazlozenje', $data);
-        }
-    }
-
-    public function obrazlozenje_sacuvaj()
-    {
-        if ($this->validate([
-            'ime' => 'required|min_length[5]',
-            'indeks' => 'required|min_length[5]',
-            'modul' => 'required',
-            'predmet' => 'required|min_length[5]',
-            'oblast' => 'required|min_length[5]',
-            'pcmm' => 'required|min_length[15]',
-            'sorm' => 'required|min_length[15]',
-        ])) {
-
-
-            $query = $this->temaModel->builder()
-                ->select('id')
-                ->where('id_student', user_id())
-                ->get();
-            $id_rad = $query->getResultArray()[0];
-            $modul_id = (int)$this->request->getPost('modul');
-
-            $obrazlozenje = [
-                'id_rad' => $id_rad['id'],
-                'id_modul' => $modul_id,
-                'predmet' => $this->request->getPost('predmet'),
-                'autor' => 'student',
-                'oblast_rada' => $this->request->getPost('oblast'),
-                'predmet_cilj_metode' => $this->request->getPost('pcmm'),
-                'sadrzaj_ocekivani_rezultat' => $this->request->getPost('sorm'),
-            ];
-
-
-            $this->obrazlozenjeModel->insert($obrazlozenje);
-
-            return redirect()->to('student/home')->with('message', 'Успешно сачувано образложење');
         } else {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
@@ -418,43 +277,6 @@ class Rukovodilac extends BaseController
         }
     }
 
-    public function biografija()
-    {
-        $temaUpit = $this->temaModel->builder()->select('id')->where('id_student', user_id())->get()->getResultArray()[0];
-        $testProvera = $this->bioModel->builder()->where('id_rad', $temaUpit['id'])->get()->getResultArray();
-
-        $test = $testProvera ?? '';
-        if ($test) {
-            return redirect()->to('student/biografija_azuriraj');
-        } else {
-            return view('student/biografija');
-        }
-    }
-
-
-    public function biografija_sacuvaj()
-    {
-        if ($this->validate([
-            'tekst' => 'required|min_length[15]',
-        ])) {
-
-            $query = $this->temaModel->builder()
-                ->select('id')
-                ->where('id_student', user_id())
-                ->get();
-            $id_rad = $query->getResultArray()[0];
-            $data = [
-                'id_rad' => $id_rad['id'],
-                'autor' => 'student',
-                'tekst' => $this->request->getPost('tekst'),
-            ];
-            $this->bioModel->insert($data);
-            return redirect()->to('student/home')->with('message', 'Успешно сачувана биографија');
-        } else {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-        }
-    }
-
     public function biografija_azuriraj($id_student)
     {
         // tema
@@ -470,7 +292,6 @@ class Rukovodilac extends BaseController
  
         return view('rukovodilac/biografija_azuriraj', $data);
     }
-
     
     public function biografija_azuriraj_sacuvaj()
     {
@@ -569,15 +390,15 @@ class Rukovodilac extends BaseController
 
     public function vrati_mentoru($id_student)
     {
-        $rukRada = user_id();
+        $temaUpit = $this->temaModel->builder()->where('id_student', $id_student)->get()->getResultArray()[0];
+        $mentorUpit = $this->user->builder()->where('id', $temaUpit['id_mentor'])->get()->getResultArray()[0];
         // tema
         $tema = [
             'id_student' => $id_student,
-            'id_mentor' => $rukRada,
+            'id_mentor' =>  $mentorUpit['id'],
             'status' => '2',
             'deleted_at' => '',
         ];
-        $temaUpit = $this->temaModel->builder()->where('id_student', $id_student)->get()->getResultArray()[0];
         if($temaUpit['status'] == 2){
           return redirect()->to('rukovodilac/home')->with('message', 'Пријава је већ враћена ментору!');
         }else{

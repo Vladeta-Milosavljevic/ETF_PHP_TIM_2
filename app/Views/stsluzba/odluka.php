@@ -1,4 +1,4 @@
-<?php
+<?php 
 $this->extend('layout');
 $this->section('sidebar');
 $link = [
@@ -84,14 +84,14 @@ $this->section('content');
                         <div class="card-body">
 
 <div class="container">
-    <div class="row col-md-9 col-md-offset-2 custyle">
+    <div class="row col-md-10 col-md-offset-2 custyle">
     <table class="table table-striped custab">
         <?php
         $con=mysqli_connect("localhost","root","","etfphpprojekat");
         $data = user_id();
          $query = "SELECT *
                   FROM users join tema on (users.id=tema.id_student)
-                  join prijava on (tema.id = prijava.id_rad)";
+                  join prijava on (tema.id = prijava.id_rad) join komisija on (prijava.id_rad = komisija.id_rad) where komisija.id_odluke_kom <> 0";
         $result = mysqli_query($con, $query);
         echo "<table>";
         ?>
@@ -116,12 +116,12 @@ $this->section('content');
         while($row = mysqli_fetch_array($result)){  
 
         echo "<tr>";
-        echo "<td class='text-center'>" . $row['id'] . "</td>";
+        echo "<td class='text-center'>" . $row['id_rad'] . "</td>";
         echo "<td class='text-center'>" . $row['username'] . "</td>";
         ?>
         <td class="text-center">
             <?php
-            echo anchor('stsluzba/prijava_azuriraj/'.$row['id'], 'измени', ['class' => 'btn btn-outline-dark ml-2']);
+            echo anchor('stsluzba/prijava_azuriraj/'.$row['id_rad'], 'измени', ['class' => 'btn btn-outline-dark ml-2']);
             ?>
         </td>
         <td class="text-center">
@@ -136,18 +136,16 @@ $this->section('content');
         </td>
                 <td>
                 <div class="form-group">
-                    <textarea type="text" rows="2"
+                    <textarea type="text" rows="2" readonly = "readonly"
                         class="form-control <?php if (session('errors.obrazlozenje')) : ?>is-invalid<?php endif ?> mb-3"
-                        name="obrazlozenje" style="width:170%" id = "obrazlozenje" aria-describedby="obrazlozenje" placeholder=""
-                        value="<?= old('obrazlozenje') ?>"></textarea>
+                        name="obrazlozenje" style="width:170%" id = "obrazlozenje" aria-describedby="obrazlozenje" placeholder=""><?= $row['obrazlozenje']?></textarea>
                 </div>
                 </td>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
-                <td class="text-center">      
-            <button onclick="myFunction(<?php echo($row['id_student'])?>)" class="btn btn-outline-dark">Потребне измене</button>
+                <td></td>   
+                <td><?= $row['datum']?></td>
         </td>
         <?php
         echo "</tr>"; }
