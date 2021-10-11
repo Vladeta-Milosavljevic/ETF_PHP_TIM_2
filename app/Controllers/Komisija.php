@@ -191,22 +191,20 @@ class Komisija extends BaseController
         }
     }
 
-    public function odluka_komisije_potrebne_izmene($id_student)
+    public function odluka_komisije_potrebne_izmene()
     {
+        $id_student =  $this->request->getPost('id_student');
+        $obrazlozenje = $this->request->getPost('obrazlozenje');
         $temaUpit = $this->temaModel->builder()->where('id_student', $id_student)->get()->getResultArray()[0];
         $komisijaUpit = $this->komisijaModel->builder()->where('id', user_id())->get()->getResultArray()[0];
-        date_default_timezone_set('Europe/Belgrade');
-        $date = date('Y-m-d H:i:s');
 
-        // tema
         $odluka = [
             'id_odluke_kom' => '3',
-            'obrazlozenje' => $this->request->getVar('obrazlozenje'),
-            'datum' => $date,
+            'obrazlozenje' => $obrazlozenje,
+            'datum'=> date("Y/m/d")
         ];
 
-           $this->komisijaModel->update($komisijaUpit['id'], $odluka);
-           return redirect()->to('komisija/home')->with('message', 'Успешно донета одлука');
+        $this->komisijaModel->update(user_id(), $odluka);
     }
 }
 

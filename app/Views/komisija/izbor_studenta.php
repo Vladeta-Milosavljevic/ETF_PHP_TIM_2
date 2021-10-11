@@ -4,8 +4,8 @@ $this->section('sidebar');
 $link = [
     'Насловна' => 'komisija/home',
     'Oдлука комисије' => 'komisija/odluka',
-
 ];
+
 ?>
 <!-- tabela iz bootstrap teme -->
 <head>
@@ -18,7 +18,7 @@ $link = [
     <title>Tables - SB Admin</title>
     <link
         href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css"
-        rel="stylesheet" />
+      rel="stylesheet" />
     <?php
     helper('html');
     helper('auth');
@@ -27,9 +27,7 @@ $link = [
     ?>
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
-        crossorigin="anonymous"></script>
-  
-
+        crossorigin="anonymous"></script> 
 
 <link rel="stylesheet" href="style.css">
 
@@ -85,19 +83,18 @@ $this->section('content');
                             Taбела са студентима
                         </div>
                         <div class="card-body">
-                            
+
 <div class="container">
     <div class="row col-md-9 col-md-offset-2 custyle">
     <table class="table table-striped custab">
         <?php
         $con=mysqli_connect("localhost","root","","etfphpprojekat");
         $data = user_id();
- 
-        $query = "SELECT *
-                  FROM users join tema on (users.id=tema.id_student) 
+         $query = "SELECT *
+                  FROM users join tema on (users.id=tema.id_student)
                   join prijava on (tema.id = prijava.id_rad)";
         $result = mysqli_query($con, $query);
-        echo "<table>"; 
+        echo "<table>";
         ?>
         <table class="table table-striped custab">
         <thead>
@@ -115,28 +112,29 @@ $this->section('content');
                 <th class="text-center"></th>
                 <th class="text-center"></th>
                 <th class="text-center"></th>
+
             </tr>
         </thead>
         <?php
         while($row = mysqli_fetch_array($result)){  
-             
+
         echo "<tr>";
         echo "<td class='text-center'>" . $row['id'] . "</td>";
         echo "<td class='text-center'>" . $row['username'] . "</td>";
         ?>
-        <td class="text-center"> 
-            <?php 
-            echo anchor('komisija/prijava_azuriraj/'.$row['id'], 'Погледај', ['class' => 'btn btn-outline-dark ml-2']); 
+        <td class="text-center">
+            <?php
+            echo anchor('komisija/prijava_azuriraj/'.$row['id'], 'погледај', ['class' => 'btn btn-outline-dark ml-2']);
             ?>
         </td>
-        <td class="text-center"> 
+        <td class="text-center">
             <?php
-            echo anchor('komisija/obrazlozenje_azuriraj/'.$row['id_student'], 'Погледај', ['class' => 'btn btn-outline-dark ml-2']);
+            echo anchor('komisija/obrazlozenje_azuriraj/'.$row['id_student'], 'погледај', ['class' => 'btn btn-outline-dark ml-2']);
             ?>
         </td>
-        <td class="text-center">       
+        <td class="text-center">      
             <?php
-            echo anchor('komisija/biografija_azuriraj/'.$row['id_student'], 'Погледај', ['class' => 'btn btn-outline-dark ml-2']);
+            echo anchor('komisija/biografija_azuriraj/'.$row['id_student'], 'погледај', ['class' => 'btn btn-outline-dark ml-2']);
             ?>
         </td>
                 <td class="text-center">        
@@ -150,10 +148,10 @@ $this->section('content');
                 </div>
                 </td>
                 <td>
-                <div class="form-group" style="width:160%" >
+                <div class="form-group">
                     <textarea type="text" rows="2"
                         class="form-control <?php if (session('errors.obrazlozenje')) : ?>is-invalid<?php endif ?> mb-3"
-                        name="obrazlozenje" aria-describedby="obrazlozenje" placeholder="" 
+                        name="obrazlozenje" style="width:170%" id = "obrazlozenje" aria-describedby="obrazlozenje" placeholder=""
                         value="<?= old('obrazlozenje') ?>"></textarea>
                 </div>
                 </td>
@@ -161,25 +159,20 @@ $this->section('content');
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="text-center">       
-            <?php
-            echo anchor('komisija/odluka_komisije_potrebne_izmene/'.$row['id_student'], 'Убаци измене', ['class' => 'btn btn-outline-dark ml-2']);
-            ?>
+                <td class="text-center">      
+            <button onclick="myFunction(<?php echo($row['id_student'])?>)" class="btn btn-outline-dark">Потребне измене</button>
         </td>
-        <?php 
+        <?php
         echo "</tr>"; }
         echo "</table>";
         ?>
-
     </div>
 </div>
-
                         </div>
                     </div>
                 </div>
             </main>
-
-<!-- tabele iz bootstrapa -->
+ <!-- tabele iz bootstrapa -->
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
@@ -187,6 +180,22 @@ $this->section('content');
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"
         crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
 
-
+function myFunction(id_student) { 
+  var obrazlozenje = document.getElementById("obrazlozenje").value;
+  $.ajax({
+            type : "POST",
+            url  : "odluka_komisije_potrebne_izmene",
+            data : {id_student:id_student, obrazlozenje:obrazlozenje},
+            success: function(){
+                alert("Успешно сачуване измене!");
+            },
+            error: function(){
+                alert("Дошло је до грешке!");
+            }
+        });
+}
+</script>
 <?php $this->endSection(); ?>
