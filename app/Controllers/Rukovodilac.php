@@ -50,9 +50,6 @@ class Rukovodilac extends BaseController
 
     public function prijava_azuriraj($id)
     {
-        $mentorUpit = $this->user->builder()->where('id', user_id())->get()->getResultArray()[0];
-        $data['mentor'] = $mentorUpit;
-        $mentorId = $mentorUpit['id'];
 
         // prijava
         $prijavaUpit = $this->prijavaModel->builder()->where('id', $id)
@@ -62,6 +59,9 @@ class Rukovodilac extends BaseController
         // tema
         $tema_id = $prijavaUpit['id_rad'];
         $temaUpit = $this->temaModel->builder()->where('id',  $tema_id)->get()->getResultArray()[0];
+        $mentorId = $temaUpit['id_mentor'];
+        $mentorUpit = $this->user->builder()->where('id', $mentorId)->get()->getResultArray()[0];
+        $data['mentor'] = $mentorUpit;
         $data['tema'] = $temaUpit;
 
         $id_student = $temaUpit['id_student'];
@@ -93,17 +93,17 @@ class Rukovodilac extends BaseController
             if($komentar['mentor_komentar'] != ''){
              $komentari .= "Komentar mentora: ";
              $komentari .= $komentar['mentor_komentar'];
-             $komentari .= ' ' .'"\r\n"';
+             $komentari .= ".\r\n";
             }
             if($komentar['ruk_komentar'] != ''){
              $komentari .= 'Komentar rukovodioca: ';
              $komentari .= $komentar['ruk_komentar'];
-             $komentari .= ' '.'"\r\n"';
+             $komentari .= ".\r\n";
             }
             if($komentar['st_sluz_komentar'] != ''){
              $komentari .= 'Komentar sluzbe: ';
              $komentari .= $komentar['st_sluz_komentar'];
-             $komentari .= ' '.'"\n"';
+             $komentari .= ".\r\n";
             }
         }
         $data['prethodni_komentari'] = $komentari;
@@ -123,8 +123,9 @@ class Rukovodilac extends BaseController
             'clan3' => 'required',
             'date' => 'required'
         ])) {
- 
-            $rukRada = user_id();
+            $tema_id = $this->request->getPost('tema_id');
+            $temaUpit = $this->temaModel->builder()->where('id',  $tema_id)->get()->getResultArray()[0];
+            $rukRada = $temaUpit['id_mentor'];
             $clan2 = $this->request->getPost('clan2');
             $clan3 = $this->request->getPost('clan3');
             if ($rukRada == $clan2 || $rukRada == $clan3 || $clan2 == $clan3) {
@@ -140,7 +141,7 @@ class Rukovodilac extends BaseController
                 'status' => '4',
                 'deleted_at' => '',
             ];
-            $tema_id = $this->request->getPost('tema_id');
+            
             $this->temaModel->update($tema_id, $tema);
             $id = $tema_id;
              
@@ -336,22 +337,6 @@ class Rukovodilac extends BaseController
             return redirect()->to('rukovodilac/home')->with('message', 'Успешно ажурирана биографија oд стране руководиоца');
         } else {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-        }
-    }
-
-    public function brisanje_teme()
-    {
-        // tema
-        $temaUpit = $this->temaModel->builder()->where('id_student', user_id())
-            ->get()->getResultArray()[0];
-        $idt = $temaUpit['id'];
-        $id_teme = $idt ?? '';
-
-        if ($id_teme) {
-            $this->temaModel->delete($id_teme);
-            return redirect()->to('student/home')->with('message', 'Успешно обрисана тема');
-        } else {
-            return redirect()->to('student/home')->with('message', 'Немате пријављену тему');
         }
     }
 

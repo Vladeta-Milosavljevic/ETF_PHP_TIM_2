@@ -148,6 +148,12 @@ $this->section('content');
                         placeholder="Date" value="<?= $prijava_date ?>">
                 </div>
                 <br>
+                <h3 class="mt-6">Претходни коментари</h3>
+                <div class="form-group">
+                    <textarea class="form-control" readonly="readonly" name="prethodni_komentari" cols="66" rows="3" 
+                        id="prethodni_komentari"><?= $prethodni_komentari?>
+                    </textarea>
+                </div>
                 <h3 class="mt-6">Коментари</h3>
                 <div class="form-group">
                     <label for="komentari"></label>

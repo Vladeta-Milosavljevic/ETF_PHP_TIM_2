@@ -50,10 +50,6 @@ class Komisija extends BaseController
 
     public function prijava_azuriraj($id)
     {
-       $mentorUpit = $this->user->builder()->where('id', user_id())->get()->getResultArray()[0];
-       $data['mentor'] = $mentorUpit;
-       $mentorId = $mentorUpit['id'];
-    
         // prijava
         $prijavaUpit = $this->prijavaModel->builder()->where('id', $id)
         ->get()->getResultArray()[0];
@@ -62,6 +58,9 @@ class Komisija extends BaseController
         // tema
         $tema_id = $prijavaUpit['id_rad'];
         $temaUpit = $this->temaModel->builder()->where('id',  $tema_id)->get()->getResultArray()[0];
+        $mentorId = $temaUpit['id_mentor'];
+        $mentorUpit = $this->user->builder()->where('id', $mentorId)->get()->getResultArray()[0];
+        $data['mentor'] = $mentorUpit;
         $data['tema'] = $temaUpit;
 
         $id_student = $temaUpit['id_student'];
@@ -93,17 +92,17 @@ class Komisija extends BaseController
             if($komentar['mentor_komentar'] != ''){
              $komentari .= 'Komentar mentora: ';
              $komentari .= $komentar['mentor_komentar'];
-             $komentari .= ''."\n";
+             $komentari .= ".\r\n";
             }
             if($komentar['ruk_komentar'] != ''){
              $komentari .= 'Komentar rukovodioca: ';
              $komentari .= $komentar['ruk_komentar'];
-             $komentari .= ''."\n";
+             $komentari .= ".\r\n";
             }
             if($komentar['st_sluz_komentar'] != ''){
              $komentari .= 'Komentar sluzbe: ';
              $komentari .= $komentar['st_sluz_komentar'];
-             $komentari .= ''."\n";
+             $komentari .= ".\r\n";
             }
         }
         $data['prethodni_komentari'] = $komentari;
@@ -123,8 +122,9 @@ class Komisija extends BaseController
             'clan3' => 'required',
             'date' => 'required'
         ])) {
- 
-            $rukRada = user_id();
+            $tema_id = $this->request->getPost('tema_id');
+            $temaUpit = $this->temaModel->builder()->where('id',  $tema_id)->get()->getResultArray()[0];
+            $rukRada = $temaUpit['id_mentor'];
             $clan2 = $this->request->getPost('clan2');
             $clan3 = $this->request->getPost('clan3');
             if ($rukRada == $clan2 || $rukRada == $clan3 || $clan2 == $clan3) {
@@ -140,7 +140,6 @@ class Komisija extends BaseController
                 'status' => '6',  
                 'deleted_at' => '',
             ];
-            $tema_id = $this->request->getPost('tema_id');
             $this->temaModel->update($tema_id, $tema);
             $id = $tema_id;
              

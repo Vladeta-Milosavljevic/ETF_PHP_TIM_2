@@ -93,17 +93,17 @@ class Stsluzba extends BaseController
             if($komentar['mentor_komentar'] != ''){
              $komentari .= 'Komentar mentora: ';
              $komentari .= $komentar['mentor_komentar'];
-             $komentari .= '"\r\n"';
+             $komentari .= ".\r\n";
             }
             if($komentar['ruk_komentar'] != ''){
              $komentari .= 'Komentar rukovodioca: ';
              $komentari .= $komentar['ruk_komentar'];
-             $komentari .= '"\r\n"';
+             $komentari .= ".\r\n";
             }
             if($komentar['st_sluz_komentar'] != ''){
              $komentari .= 'Komentar sluzbe: ';
              $komentari .= $komentar['st_sluz_komentar'];
-             $komentari .= '"\r\n"';
+             $komentari .= ".\r\n";
             }
         }
         $data['prethodni_komentari'] = $komentari;
