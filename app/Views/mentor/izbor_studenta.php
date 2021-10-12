@@ -46,7 +46,7 @@ $link = [
             <li class="nav-item mx-0 mx-lg-1">
                 <?= anchor($url, $text, ['class' => 'nav-link']) ?>
             </li>
-            <?php endforeach; ?>
+            <?php endforeach; ?>            
             <a class="nav-link" href="index.html">
                 Негде тамо далеко
             </a>

@@ -132,11 +132,22 @@ $this->section('content');
             echo anchor('stsluzba/biografija_azuriraj/'.$row['id_student'], 'измени', ['class' => 'btn btn-outline-dark ml-2']);
             ?>
         </td>
+        <td class="text-center">        
+
                 <td class="text-center">        
                 <div>
                     <button class="btn btn-outline-dark  pull-left" type="submit">></button>
-                    <button class="btn btn-outline-dark  pull-left" type="submit">x</button>
+                    
                 </div>
+                </td>
+                <td class="text-center">      
+                    <?php
+                     if ($row['status'] == '9') {
+                     echo anchor('stsluzba/ponisti_odluku_o_brisanju/'.$row['id'], 'поништи одлуку', ['class' => 'btn btn-outline-dark ml-2']);
+                     } else {
+                    echo anchor('stsluzba/oznaci_temu_obrisanom/'.$row['id'], 'обриши тему', ['class' => 'btn btn-outline-dark ml-2']);
+                    }?>
+                </div>  
                 </td>
         <?php 
         echo "</tr>"; }

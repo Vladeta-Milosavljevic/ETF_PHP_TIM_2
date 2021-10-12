@@ -50,10 +50,10 @@ class Rukovodilac extends BaseController
 
     public function prijava_azuriraj($id)
     {
-       $mentorUpit = $this->user->builder()->where('id', user_id())->get()->getResultArray()[0];
-       $data['mentor'] = $mentorUpit;
-       $mentorId = $mentorUpit['id'];
-    
+        $mentorUpit = $this->user->builder()->where('id', user_id())->get()->getResultArray()[0];
+        $data['mentor'] = $mentorUpit;
+        $mentorId = $mentorUpit['id'];
+
         // prijava
         $prijavaUpit = $this->prijavaModel->builder()->where('id', $id)
         ->get()->getResultArray()[0];
@@ -91,19 +91,19 @@ class Rukovodilac extends BaseController
 
         foreach( $komentariUpit as $komentar){
             if($komentar['mentor_komentar'] != ''){
-             $komentari .= 'Komentar mentora: ';
+             $komentari .= "Komentar mentora: ";
              $komentari .= $komentar['mentor_komentar'];
-             $komentari .= ' ' ."\n";
+             $komentari .= ' ' .'"\r\n"';
             }
             if($komentar['ruk_komentar'] != ''){
              $komentari .= 'Komentar rukovodioca: ';
              $komentari .= $komentar['ruk_komentar'];
-             $komentari .= ' '."\n";
+             $komentari .= ' '.'"\r\n"';
             }
             if($komentar['st_sluz_komentar'] != ''){
              $komentari .= 'Komentar sluzbe: ';
              $komentari .= $komentar['st_sluz_komentar'];
-             $komentari .= ' '."\n";
+             $komentari .= ' '.'"\n"';
             }
         }
         $data['prethodni_komentari'] = $komentari;

@@ -48,40 +48,21 @@ class Stsluzba extends BaseController
         return view('stsluzba/izbor_studenta');
     }
 
-    public function prijava()
-    {
-        $query = $this->user->builder()
-            ->select('id, username')
-            ->join('auth_groups_users', 'auth_groups_users.user_id=users.id')
-            ->where('group_id', 200)
-            ->orderBy('username')
-            ->get();
-        $data['mentor'] = $query->getResultArray();
-        $testProvera = $this->temaModel->builder()->where('id_student', user_id())
-            ->get()->getResultArray();
-        $test = $testProvera ?? '';
-        if ($test) {
-            return redirect()->to('student/prijava_azuriraj');
-        } else {
-            return view('student/prijava', $data);
-        }
-    }
-
     public function prijava_azuriraj($id)
-    {
-       $mentorUpit = $this->user->builder()->where('id', user_id())->get()->getResultArray()[0];
-       $data['mentor'] = $mentorUpit;
-       $mentorId = $mentorUpit['id'];
-    
+    {    
         // prijava
         $prijavaUpit = $this->prijavaModel->builder()->where('id', $id)
         ->get()->getResultArray()[0];
         $data['prijava'] = $prijavaUpit;
  
         // tema
-        $tema_id = $prijavaUpit['id_rad'];
-        $temaUpit = $this->temaModel->builder()->where('id',  $tema_id)->get()->getResultArray()[0];
-        $data['tema'] = $temaUpit;
+       $tema_id = $prijavaUpit['id_rad'];
+       $temaUpit = $this->temaModel->builder()->where('id',  $tema_id)->get()->getResultArray()[0];
+       $data['tema'] = $temaUpit;
+
+       $mentorId = $temaUpit['id_mentor'];
+       $mentorUpit = $this->user->builder()->where('id', $mentorId)->get()->getResultArray()[0];
+       $data['mentor'] = $mentorUpit;
 
         $id_student = $temaUpit['id_student'];
         $data['id_student'] = $id_student;
@@ -142,8 +123,9 @@ class Stsluzba extends BaseController
             'clan3' => 'required',
             'date' => 'required'
         ])) {
- 
-            $rukRada = user_id();
+            $tema_id = $this->request->getPost('tema_id');
+            $temaUpit = $this->temaModel->builder()->where('id', $tema_id)->get()->getResultArray()[0];
+            $rukRada = $temaUpit['id_mentor'];
             $clan2 = $this->request->getPost('clan2');
             $clan3 = $this->request->getPost('clan3');
             if ($rukRada == $clan2 || $rukRada == $clan3 || $clan2 == $clan3) {
@@ -159,7 +141,7 @@ class Stsluzba extends BaseController
                 'status' => '6',  
                 'deleted_at' => '',
             ];
-            $tema_id = $this->request->getPost('tema_id');
+            
             $this->temaModel->update($tema_id, $tema);
             $id = $tema_id;
              
@@ -359,22 +341,48 @@ class Stsluzba extends BaseController
         }
     }
 
-    public function brisanje_teme()
+    public function oznaci_temu_obrisanom($prijava_id)
     {
+        // prijava
+        $prijavaUpit = $this->prijavaModel->builder()->where('id', $prijava_id)->get()->getResultArray()[0];
         // tema
-        $temaUpit = $this->temaModel->builder()->where('id_student', user_id())
-            ->get()->getResultArray()[0];
+        $temaUpit = $this->temaModel->builder()->where('id', $prijavaUpit['id_rad'])->get()->getResultArray()[0];
         $idt = $temaUpit['id'];
         $id_teme = $idt ?? '';
 
         if ($id_teme) {
-            $this->temaModel->delete($id_teme);
+            $tema = [
+                'status' => '9',  
+                'deleted_at' => date("Y/m/d"),
+            ];
+            
+            $this->temaModel->update($id_teme, $tema);
             return redirect()->to('stsluzba/home')->with('message', 'Успешно обрисана тема');
         } else {
             return redirect()->to('stsluzba/home')->with('message', 'Немате пријављену тему');
         }
     }
+    public function ponisti_odluku_o_brisanju($prijava_id)
+    {
+        // prijava
+        $prijavaUpit = $this->prijavaModel->builder()->where('id', $prijava_id)->get()->getResultArray()[0];
+        // tema
+        $temaUpit = $this->temaModel->builder()->where('id', $prijavaUpit['id_rad'])->get()->getResultArray()[0];
+        $idt = $temaUpit['id'];
+        $id_teme = $idt ?? '';
 
+        if ($id_teme) {
+            $tema = [
+                'status' => '5',  
+                'deleted_at' => date("Y/m/d"),
+            ];
+            
+            $this->temaModel->update($id_teme, $tema);
+            return redirect()->to('stsluzba/home')->with('message', 'Успешно поништена претходна одлука');
+        } else {
+            return redirect()->to('stsluzba/home')->with('message', 'Немате пријављену тему');
+        }
+    }
     public function prosledi_komisiji($id_student)
     {
         $temaUpit = $this->temaModel->builder()->where('id_student', $id_student)->get()->getResultArray()[0];
@@ -465,7 +473,7 @@ class Stsluzba extends BaseController
         }
     }
 
-        public function vec_prihvacena($id_student)
+    public function vec_prihvacena($id_student)
     { 
         $temaUpit = $this->temaModel->builder()->where('id_student', $id_student)->get()->getResultArray()[0];
         $mentorUpit = $this->user->builder()->where('id', $temaUpit['id_mentor'])->get()->getResultArray()[0];
@@ -486,7 +494,3 @@ class Stsluzba extends BaseController
         }
     }
 }
-
-
-
-   

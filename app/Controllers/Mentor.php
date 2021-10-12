@@ -99,7 +99,7 @@ class Mentor extends BaseController
              $komentari .= ' ' ."\n";
             }
             if($komentar['ruk_komentar'] != ''){
-             $komentari .= 'Komentar rukovodioca: ';
+             $komentari .= "Komentar rukovodioca: ";
              $komentari .= $komentar['ruk_komentar'];
              $komentari .= ' '."\n";
             }
