@@ -93,10 +93,16 @@ $this->section('content');
         $con=mysqli_connect("localhost","root","","etfphpprojekat");
         $data = user_id();
  
+       // $query = "SELECT *
+       //           FROM users join tema on (users.id=tema.id_student) 
+       //           join prijava on (tema.id = prijava.id_rad) 
+       //           WHERE prijava.izborno_podrucje_MS = (SELECT naziv from modul where ruk_modula = (select username from users where users.id = '$data') AND tema.status IN (3,4,7))";
         $query = "SELECT *
-                  FROM users join tema on (users.id=tema.id_student) 
-                  join prijava on (tema.id = prijava.id_rad) 
-                  WHERE prijava.izborno_podrucje_MS = (SELECT naziv from modul where ruk_modula = (select username from users where users.id = '$data') AND tema.status IN (3,4,7))";
+        FROM users join tema on (users.id=tema.id_student)
+        join prijava on (tema.id = prijava.id_rad)
+        WHERE prijava.izborno_podrucje_MS IN (SELECT naziv from modul 
+        where ruk_modula = (select username from users where users.id = 17) 
+        OR zam_ruk_modula = (select username from users where users.id = 17)) AND tema.status IN (3,4,7)";
         $result = mysqli_query($con, $query);
         echo "<table>"; 
         ?>
