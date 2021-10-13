@@ -140,22 +140,21 @@ class Mentor extends BaseController
             $tema = [
                 'id_student' => $id_student,
                 'id_mentor' => $rukRada,
-                'id_modul' => '',
                 'status' => '2',
                 'deleted_at' => '',
             ];
             $tema_id = $this->request->getPost('tema_id');
             $this->temaModel->update($tema_id, $tema);
             $id = $tema_id;
-             
-            $predmet = $this->request->getPost('predmet') ?? '';
+            $izborno_podrucje_master_rada = $this->request->getPost('ipms');
+            $modulUpit = $this->modulModel->builder()->where('naziv', $izborno_podrucje_master_rada)->get()->getResultArray()[0];
             $prijava = [
                 'id_rad' => $id,
                 'ime_prezime' => $this->request->getPost('ime'),
                 'indeks' => $this->request->getPost('indeks'),
                 'izborno_podrucje_MS' => $this->request->getPost('ipms'),
                 'autor' => 'mentor',
-                'ruk_predmet' => $predmet,
+                'ruk_predmet' => $modulUpit['ruk_modula'],
                 'naslov' => $this->request->getPost('naslov_sr'),
                 'naslov_eng' => $this->request->getPost('naslov_en'),
                 'datum' => $this->request->getPost('date'),

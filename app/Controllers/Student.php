@@ -98,21 +98,21 @@ class Student extends BaseController
             $tema = [
                 'id_student' => user_id(),
                 'id_mentor' => $rukRada,
-                'id_modul' => '',
                 'status' => '',
                 'deleted_at' => '',
             ];
 
 
             $id = $this->temaModel->insert($tema, true);
-            $predmet = $this->request->getPost('predmet') ?? '';
+            $izborno_podrucje_master_rada = $this->request->getPost('ipms');
+            $modulUpit = $this->modulModel->builder()->where('naziv', $izborno_podrucje_master_rada)->get()->getResultArray()[0];
             $prijava = [
                 'id_rad' => $id,
                 'ime_prezime' => $this->request->getPost('ime'),
                 'indeks' => $this->request->getPost('indeks'),
                 'izborno_podrucje_MS' => $this->request->getPost('ipms'),
                 'autor' => 'student',
-                'ruk_predmet' => $predmet,
+                'ruk_predmet' => $modulUpit['ruk_modula'],
                 'naslov' => $this->request->getPost('naslov_sr'),
                 'naslov_eng' => $this->request->getPost('naslov_en'),
                 'datum' => $this->request->getPost('date'),
@@ -214,7 +214,6 @@ class Student extends BaseController
             $tema = [
                 'id_student' => user_id(),
                 'id_mentor' => $rukRada,
-                'id_modul' => '',
                 'status' => '',
                 'deleted_at' => '',
             ];
@@ -225,35 +224,34 @@ class Student extends BaseController
                 return redirect()->to('student/home')->with('message', 'Тема је прослеђена, не можете је ажурирати');
             }
 
-
+            $izborno_podrucje_master_rada = $this->request->getPost('ipms');
+            $modulUpit = $this->modulModel->builder()->where('naziv', $izborno_podrucje_master_rada)->get()->getResultArray()[0];
             $this->temaModel->update($tema_id, $tema);
-            $id = $tema_id;
-            $predmet = $this->request->getPost('predmet') ?? '';
             $prijava = [
-                'id_rad' => $id,
+                'id_rad' => $tema_id,
                 'ime_prezime' => $this->request->getPost('ime'),
                 'indeks' => $this->request->getPost('indeks'),
                 'izborno_podrucje_MS' => $this->request->getPost('ipms'),
                 'autor' => 'student',
-                'ruk_predmet' => $predmet,
+                'ruk_predmet' => $modulUpit['ruk_modula'],
                 'naslov' => $this->request->getPost('naslov_sr'),
                 'naslov_eng' => $this->request->getPost('naslov_en'),
                 'datum' => $this->request->getPost('date'),
             ];
 
-            $prijava_id_upit = $this->prijavaModel->builder()->where('id_rad', $id)
+            $prijava_id_upit = $this->prijavaModel->builder()->where('id_rad', $tema_id)
                 ->get()->getResultArray()[0];
             $prijava_id = $prijava_id_upit['id'];
 
             $this->prijavaModel->update($prijava_id, $prijava);
 
             $komisija = [
-                'id_rad' => $id,
+                'id_rad' => $tema_id,
                 'id_pred_kom' => $rukRada,
                 'id_clan_2' => $clan2,
                 'id_clan_3' => $clan3,
             ];
-            $komisija_id_upit = $this->komisijaModel->builder()->where('id_rad', $id)
+            $komisija_id_upit = $this->komisijaModel->builder()->where('id_rad', $tema_id)
                 ->get()->getResultArray()[0];
             $komisija_id = $komisija_id_upit['id'];
 
