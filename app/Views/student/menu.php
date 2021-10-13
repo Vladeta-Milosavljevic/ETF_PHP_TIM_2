@@ -27,10 +27,14 @@ $link_verzije = [
                 <?= anchor($url, $text, ['class' => 'nav-link']) ?>
             </li>
             <?php endforeach; ?>
+            <div x-data="{ open: false }">
+                <a x-on:click="open = !open" class="nav-link">Статус пријаве</a>
 
-
-
-            <div class="sb-sidenav-menu-heading">Статус пријаве
+                <div x-cloak x-show="open" class="nav-link">
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <?= anchor('student/status_prijave', 'Проверите статус', ['class' => 'nav-link']) ?>
+                    </li>
+                </div>
             </div>
             <a class="nav-link" href="index.html">
                 Негде тамо далеко

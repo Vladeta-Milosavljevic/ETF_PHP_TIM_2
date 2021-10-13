@@ -54,8 +54,6 @@ $this->section('content');
     </div>
 </div>
 <div>Налог - Студент</div>
-
 <?= view('Myth\Auth\Views\_message_block') ?>
-
 
 <?php $this->endSection(); ?>

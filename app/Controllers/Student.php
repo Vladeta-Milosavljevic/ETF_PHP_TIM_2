@@ -40,6 +40,20 @@ class Student extends BaseController
         return view('student/home');
     }
 
+    public function status_prijave()
+    {
+        // studentu se salje poruka da mu je prijava odbijena
+        $temaUpit = $this->temaModel->builder()->where('id_student', user_id())
+            ->get()->getResultArray()[0];
+        if ($temaUpit['status'] == '9') {
+            return redirect()->to('student/home')->with('error', 'Ваша тема је одбијена');
+        } else if ($temaUpit['status'] == '8') {
+            return redirect()->to('student/home')->with('message', 'Пријава је прихваћена од стране студентске службе');
+        } else if ($temaUpit['status'] != '9') {
+            return redirect()->to('student/home')->with('message', 'Пријава је у обради');
+        }
+    }
+
     public function prijava()
     {
         $query = $this->user->builder()

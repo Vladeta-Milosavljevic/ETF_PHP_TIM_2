@@ -27,7 +27,7 @@ $this->section('content');
                 <br>
                 <div class="form-group">
                     <label for="indeks">Број индекса</label>
-                    <input type="text"
+                    <input type="text" pattern="/^(\d{4})\/(\d{4})$/" title="Унесите број индекса у формату _ _ _ _/_ _ _ _"
                         class="form-control <?php if (session('errors.indeks')) : ?>is-invalid<?php endif ?>"
                         name="indeks" aria-describedby="indeks" placeholder="Број индекса"
                         value="<?= old('indeks') ?>">

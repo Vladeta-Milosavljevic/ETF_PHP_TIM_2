@@ -27,7 +27,7 @@ return [
 
     // Login
     'badAttempt'                => 'Погрешно унети подаци. Проверите податке.',
-    'loginSuccess'              => 'Добро дошли назад!',
+    'loginSuccess'              => 'Добро дошли на студентски портал!',
     'invalidPassword'           => 'Погрешно унети подаци. Проверите шифру.',
 
     // Forgotten Passwords
