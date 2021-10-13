@@ -54,7 +54,6 @@ $this->section('content');
                         <?php $mentor_ime = old('username') ?? $mentor['username'] ?>
                         value="<?= $mentor_ime ?>">
                 </div>
-
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="izbor" onclick="rukPredmet()"
                         id="izbor1" value="option1" checked>
