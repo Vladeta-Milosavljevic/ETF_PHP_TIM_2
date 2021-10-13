@@ -107,7 +107,8 @@ $this->section('content');
                 <th class="text-center">Пријава</th>
                 <th class="text-center">Образложење теме</th>
                 <th class="text-center">Биографија</th>
-                <th class="text-center">Потврда теме</th>
+                <th class="text-center"></th>
+                <th class="text-center">Поништи/обриши</th>
             </tr>
         </thead>
         <?php
@@ -133,13 +134,6 @@ $this->section('content');
             ?>
         </td>
         <td class="text-center">        
-
-                <td class="text-center">        
-                <div>
-                    <button class="btn btn-outline-dark  pull-left" type="submit">></button>
-                    
-                </div>
-                </td>
                 <td class="text-center">      
                     <?php
                      if ($row['status'] == '9') {

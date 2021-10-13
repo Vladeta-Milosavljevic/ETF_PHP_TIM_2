@@ -106,7 +106,6 @@ $this->section('content');
                 <th class="text-center">Пријава</th>
                 <th class="text-center">Образложење теме</th>
                 <th class="text-center">Биографија</th>
-                <th class="text-center">Потврда теме</th>
             </tr>
         </thead>
         <?php
@@ -131,12 +130,7 @@ $this->section('content');
             echo anchor('mentor/biografija_azuriraj/'.$row['id_student'], 'измени', ['class' => 'btn btn-outline-dark ml-2']);
             ?>
         </td>
-                <td class="text-center">        
-                <div>
-                    <button class="btn btn-outline-dark  pull-left" type="submit">></button>
-                    <button class="btn btn-outline-dark  pull-left" type="submit">x</button>
-                </div>
-                </td>
+
         <?php 
         echo "</tr>"; }
         echo "</table>";

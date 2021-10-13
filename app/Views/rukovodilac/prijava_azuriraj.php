@@ -49,8 +49,8 @@ $this->section('content');
                 <div class="form-group">
                     <label for="rukovodilac">Име и презиме руководиоца рада (ментора)</label>
                     <input type="text"
-                        class="form-control <?php if (session('errors.ime')) : ?>is-invalid<?php endif ?>"
-                        name="ime" aria-describedby="ime" placeholder="Име и презиме студента"
+                        class="form-control <?php if (session('errors.rukRada')) : ?>is-invalid<?php endif ?>"
+                        name="rukRada" aria-describedby="rukRada" placeholder="Име и презиме студента"
                         <?php $mentor_ime = old('username') ?? $mentor['username'] ?>
                         value="<?= $mentor_ime ?>">
                 </div>

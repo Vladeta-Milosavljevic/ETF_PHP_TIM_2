@@ -66,8 +66,6 @@ $this->section('content');
                 <th class="text-center" style="width:5%">ID студента</th>
                 <th class="text-center" style="width:20%">Аутор</th>
                 <th class="text-center" style="width:30%">Назив теме</th>
-                <th class="text-center" style="width:20%">Прихвата се</th>
-                <th class="text-center" style="width:20%">Одбија се</th>
                 <th class="text-center" style="width:10%">Измене</th>
             </tr>
         </thead>
@@ -80,10 +78,7 @@ $this->section('content');
         echo "<td class='text-center'>" . $row['autor'] . "</td>";
         echo "<td class='text-center'>" . $row['naslov'] . "</td>";
         
-        ?>
-        
-        <td class="text-center"><button class="btn btn-outline-dark  btn-pressure pull-left">></button></td>
-        <td class="text-center"><button class="btn btn-outline-dark  btn-pressure pull-left">x</button></td>        
+        ?>       
         <td class="text-center">        
             <?php
             echo anchor('komisija/izbor_studenta/', 'измени', ['class' => 'btn btn-outline-dark ml-2']);
