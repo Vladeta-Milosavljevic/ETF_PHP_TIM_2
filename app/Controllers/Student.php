@@ -552,7 +552,6 @@ class Student extends BaseController
             $data[$priU['autor']] = $priU;
         }
 
-
         return view('student/prijava_verzije', $data);
     }
 
