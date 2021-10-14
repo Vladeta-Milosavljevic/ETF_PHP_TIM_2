@@ -479,18 +479,18 @@ class Student extends BaseController
          $temaUpit = $this->temaModel->builder()->where('id_student', user_id())->get()->getResultArray()[0];
          $id_teme = $temaUpit['id'];
          $this->temaModel->delete($id_teme);
-         $obrazlozenjeUpit = $this->bioModel->builder()->where('id_rad', $id_teme)->get()->getResultArray()[0];
-         $this->obrazozenjeModel->delete($obrazlozenjeUpit['id']);
+       
+         $obrazlozenjeUpit = $this->obrazlozenjeModel->builder()->where('id_rad', $id_teme)->get()->getResultArray()[0];
+         $this->obrazlozenjeModel->delete($obrazlozenjeUpit['id']);
          $biografijaUpit = $this->bioModel->builder()->where('id_rad', $id_teme)->get()->getResultArray()[0];
-         $this->bioModel->delete( $biografijaUpit['id']);
+         $this->bioModel->delete($biografijaUpit['id']);
          $prijavaUpit = $this->prijavaModel->builder()->where('id_rad', $id_teme)->get()->getResultArray()[0];
          $this->prijavaModel->delete($prijavaUpit['id']);
-         $komisijaUpit = $this->komisijaModel->builder()->where('id_rad', $id_teme)
-                ->get()->getResultArray()[0];
-        $this->komisijaModel->delete($komisijaUpit['id']);
-            return redirect()->to('student/home')->with('message', 'Успешно обрисана тема');
+         $komisijaUpit = $this->komisijaModel->builder()->where('id_rad', $id_teme)->get()->getResultArray()[0];
+         $this->komisijaModel->delete($komisijaUpit['id']);
+         return redirect()->to('student/home')->with('message', 'Успешно обрисана тема');
         }catch(\Exception $e){
-            return redirect()->to('student/home')->with('error', 'Немате пријављену тему');
+            return redirect()->to('student/home')->with('error',  'Heуспешно обрисана тема');
         }
     }
 
