@@ -11,6 +11,11 @@ $link_verzije = [
     'Образложење' => 'student/obrazlozenje_verzije',
     'Биографија' => 'student/biografija_verzije',
 ];
+$link_pdf = [
+    'Пријава ПДФ' => 'student/pdf_prijava',
+    'Образложење ПДФ' => 'student/pdf_obrazlozenje',
+    'Биографија ПДФ' => 'student/pdf_biografija',
+];
 ?>
 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
     <div class="sb-sidenav-menu">
@@ -27,18 +32,8 @@ $link_verzije = [
                 <?= anchor($url, $text, ['class' => 'nav-link']) ?>
             </li>
             <?php endforeach; ?>
-            <div x-data="{ open: false }">
-                <a x-on:click="open = !open" class="nav-link">Статус пријаве</a>
 
-                <div x-cloak x-show="open" class="nav-link">
-                    <li class="nav-item mx-0 mx-lg-1">
-                        <?= anchor('student/status_prijave', 'Проверите статус', ['class' => 'nav-link']) ?>
-                    </li>
-                </div>
-            </div>
-            <a class="nav-link" href="index.html">
-                Негде тамо далеко
-            </a>
+
             <div x-data="{ open: false }">
                 <a x-on:click="open = !open" class="nav-link">Проследите тему ментору</a>
 
@@ -49,10 +44,6 @@ $link_verzije = [
                 </div>
             </div>
 
-
-
-
-
             <div class="sb-sidenav-menu-heading">Верзије докумената
             </div>
 
@@ -60,6 +51,19 @@ $link_verzije = [
                 <a x-on:click="open = !open" class="nav-link">Листа верзија</a>
 
                 <?php foreach ($link_verzije as $text => $url) : ?>
+                <li x-cloak x-show="open" class="nav-item mx-0 mx-lg-1">
+                    <?= anchor($url, $text, ['class' => 'nav-link']) ?>
+                </li>
+                <?php endforeach; ?>
+
+            </div>
+            <div class="sb-sidenav-menu-heading">Скидање докумената - ПДФ формат
+            </div>
+
+            <div x-data="{ open: false }">
+                <a x-on:click="open = !open" class="nav-link">Листа ПДФ</a>
+
+                <?php foreach ($link_pdf as $text => $url) : ?>
                 <li x-cloak x-show="open" class="nav-item mx-0 mx-lg-1">
                     <?= anchor($url, $text, ['class' => 'nav-link']) ?>
                 </li>

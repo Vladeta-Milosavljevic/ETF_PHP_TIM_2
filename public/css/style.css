@@ -199,3 +199,38 @@
 ::-webkit-calendar-picker-indicator {
   display: none;
 }
+
+.linija-g {
+  border-top-style: solid;
+  border-width: 1px;
+}
+
+.linija-do {
+  border-bottom-style: solid;
+  border-width: 1px;
+}
+
+.linija-l {
+  border-left-style: solid;
+  border-width: 1px;
+}
+.linija-de {
+  border-right-style: solid;
+  border-width: 1px;
+}
+
+.tekst {
+  font-size: 12px;
+}
+
+@media print {
+  @page {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  body {
+    padding-top: 36px;
+    padding-bottom: 36px;
+    padding-left: 48px;
+  }
+}
